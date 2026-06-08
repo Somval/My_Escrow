@@ -22,7 +22,6 @@ const T = {
   teal:      "#0d9488",
   tealLt:    "#e6faf8",
 };
-
 const globalCSS = `
   @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,600;0,700;1,400&display=swap');
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -125,8 +124,9 @@ const NAV_ITEMS = [
 
 const Navbar = ({ onLogin, onSignup, navigate }) => {
   const [openMenu, setOpenMenu] = useState(null);
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled]   = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileExpanded, setMobileExpanded] = useState(null);
   const timer = useRef(null);
 
   useEffect(() => {
@@ -135,82 +135,126 @@ const Navbar = ({ onLogin, onSignup, navigate }) => {
     return () => window.removeEventListener("scroll", h);
   }, []);
 
+  // Close mobile menu on scroll
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const h = () => setMobileOpen(false);
+    window.addEventListener("scroll", h, { passive: true });
+    return () => window.removeEventListener("scroll", h);
+  }, [mobileOpen]);
+
   const enter = (l) => { clearTimeout(timer.current); setOpenMenu(l); };
   const leave = () => { timer.current = setTimeout(() => setOpenMenu(null), 120); };
 
-  return (
-    <nav style={{ background:T.white, position:"sticky", top:0, zIndex:200, boxShadow: scrolled?"0 2px 20px rgba(0,0,0,0.1)":"0 1px 0 #e2e8f0", transition:"box-shadow 0.2s" }}>
-      <div style={{ maxWidth:1280, margin:"0 auto", padding:"0 1.5rem", display:"flex", alignItems:"center", height:64 }}>
-        {/* Logo */}
-        <div style={{ display:"flex", alignItems:"center", gap:10, cursor:"pointer", flexShrink:0 }} onClick={() => navigate("home")}>
-          <div style={{ width:38, height:38, background:`linear-gradient(135deg,${T.primary},${T.primaryDk})`, borderRadius:10, display:"flex", alignItems:"center", justifyContent:"center" }}>
-            <span style={{ color:T.white, fontWeight:800, fontSize:18, fontFamily:"'Lora',serif" }}>V</span>
-          </div>
-          <span style={{ fontWeight:800, fontSize:20, color:T.primary, letterSpacing:"-0.4px" }}>Vault<span style={{ color:T.accent }}>Pay</span></span>
-        </div>
+  const toggleMobileSection = (label) =>
+    setMobileExpanded(prev => prev === label ? null : label);
 
-        {/* Desktop nav */}
-        <div className="nav-desktop" style={{ display:"flex", alignItems:"center", gap:2, marginLeft:36, flex:1 }}>
+  return (
+    <>
+      <nav style={{ background:T.white, position:"sticky", top:0, zIndex:200, boxShadow: scrolled?"0 2px 20px rgba(0,0,0,0.1)":"0 1px 0 #e2e8f0", transition:"box-shadow 0.2s" }}>
+        <div style={{ maxWidth:1280, margin:"0 auto", padding:"0 1.5rem", display:"flex", alignItems:"center", height:64 }}>
+          {/* Logo */}
+          <div style={{ display:"flex", alignItems:"center", gap:10, cursor:"pointer", flexShrink:0 }} onClick={() => { navigate("home"); setMobileOpen(false); }}>
+            <div style={{ width:38, height:38, background:`linear-gradient(135deg,${T.primary},${T.primaryDk})`, borderRadius:10, display:"flex", alignItems:"center", justifyContent:"center" }}>
+              <span style={{ color:T.white, fontWeight:800, fontSize:18, fontFamily:"'Lora',serif" }}>V</span>
+            </div>
+            <span style={{ fontWeight:800, fontSize:20, color:T.primary, letterSpacing:"-0.4px" }}>Vault<span style={{ color:T.accent }}>Pay</span></span>
+          </div>
+
+          {/* Desktop nav */}
+          <div className="nav-desktop" style={{ display:"flex", alignItems:"center", gap:2, marginLeft:36, flex:1 }}>
+            {NAV_ITEMS.map(item => (
+              <div key={item.label} style={{ position:"relative" }} onMouseEnter={() => enter(item.label)} onMouseLeave={leave}>
+                <button className="nav-link" style={{ background:"none", border:"none", cursor:"pointer", padding:"8px 14px", fontWeight:600, fontSize:14, color: openMenu===item.label ? T.accent : T.gray700, display:"flex", alignItems:"center", gap:5 }}>
+                  {item.label}
+                  <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ transition:"transform 0.2s", transform: openMenu===item.label?"rotate(180deg)":"none" }}>
+                    <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+                {openMenu === item.label && (
+                  <div className="dropdown-menu" style={{ position:"absolute", top:"calc(100% + 6px)", left:0, background:T.white, border:`1px solid ${T.gray100}`, borderRadius:12, boxShadow:"0 8px 40px rgba(0,0,0,0.13)", minWidth:260, zIndex:300, overflow:"hidden" }}>
+                    <div style={{ padding:"8px 0" }}>
+                      {item.children.map(ch => (
+                        <button key={ch.label} className="nav-link" style={{ width:"100%", background:"none", border:"none", cursor:"pointer", padding:"11px 20px", textAlign:"left" }}>
+                          <div style={{ fontWeight:600, fontSize:14, color:T.gray900 }}>{ch.label}</div>
+                          <div style={{ fontSize:12, color:T.gray500, marginTop:2 }}>{ch.desc}</div>
+                        </button>
+                      ))}
+                    </div>
+                    <div style={{ background:T.offWhite, borderTop:`1px solid ${T.gray100}`, padding:"14px 20px" }}>
+                      <div style={{ fontWeight:700, fontSize:13, color:T.primary, marginBottom:8 }}>Start a Transaction →</div>
+                      <Btn variant="accent" style={{ fontSize:13, padding:"8px 18px" }} onClick={onSignup}>Get Started Free</Btn>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <div className="nav-desktop" style={{ display:"flex", alignItems:"center", gap:10, marginLeft:16, flexShrink:0 }}>
+            <Btn variant="ghost" onClick={onLogin} style={{ fontSize:14 }}>Login</Btn>
+            <Btn variant="accent" onClick={onSignup} style={{ fontSize:14, padding:"10px 22px" }}>Sign Up Free →</Btn>
+          </div>
+
+          {/* Mobile hamburger */}
+          <button
+            className="mobile-menu-btn"
+            onClick={() => { setMobileOpen(o => !o); setMobileExpanded(null); }}
+            style={{ display:"none", marginLeft:"auto", background:"none", border:"none", cursor:"pointer", flexDirection:"column", gap:5, padding:8 }}
+            aria-label="Toggle menu"
+          >
+            {mobileOpen
+              ? <span style={{ fontSize:22, lineHeight:1, color:T.gray700 }}>✕</span>
+              : [0,1,2].map(i => <span key={i} style={{ display:"block", width:24, height:2, background:T.gray700, borderRadius:2 }} />)
+            }
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile drawer — lives OUTSIDE sticky nav so it pushes page content down */}
+      {mobileOpen && (
+        <div style={{ background:T.white, borderBottom:`1px solid ${T.gray100}`, boxShadow:"0 4px 20px rgba(0,0,0,0.08)" }}>
           {NAV_ITEMS.map(item => (
-            <div key={item.label} style={{ position:"relative" }} onMouseEnter={() => enter(item.label)} onMouseLeave={leave}>
-              <button className="nav-link" style={{ background:"none", border:"none", cursor:"pointer", padding:"8px 14px", fontWeight:600, fontSize:14, color: openMenu===item.label ? T.accent : T.gray700, display:"flex", alignItems:"center", gap:5 }}>
+            <div key={item.label} style={{ borderBottom:`1px solid ${T.gray100}` }}>
+              {/* Section header — tap to expand */}
+              <button
+                onClick={() => toggleMobileSection(item.label)}
+                style={{ width:"100%", background:"none", border:"none", cursor:"pointer", display:"flex", justifyContent:"space-between", alignItems:"center", padding:"14px 1.5rem", fontWeight:700, fontSize:15, color: mobileExpanded===item.label ? T.primary : T.gray900 }}
+              >
                 {item.label}
-                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ transition:"transform 0.2s", transform: openMenu===item.label?"rotate(180deg)":"none" }}>
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ transition:"transform 0.2s", transform: mobileExpanded===item.label?"rotate(180deg)":"none", flexShrink:0 }}>
                   <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </button>
-              {openMenu === item.label && (
-                <div className="dropdown-menu" style={{ position:"absolute", top:"calc(100% + 6px)", left:0, background:T.white, border:`1px solid ${T.gray100}`, borderRadius:12, boxShadow:"0 8px 40px rgba(0,0,0,0.13)", minWidth:260, zIndex:300, overflow:"hidden" }}>
-                  <div style={{ padding:"8px 0" }}>
-                    {item.children.map(ch => (
-                      <button key={ch.label} className="nav-link" style={{ width:"100%", background:"none", border:"none", cursor:"pointer", padding:"11px 20px", textAlign:"left" }}>
-                        <div style={{ fontWeight:600, fontSize:14, color:T.gray900 }}>{ch.label}</div>
-                        <div style={{ fontSize:12, color:T.gray500, marginTop:2 }}>{ch.desc}</div>
-                      </button>
-                    ))}
-                  </div>
-                  <div style={{ background:T.offWhite, borderTop:`1px solid ${T.gray100}`, padding:"14px 20px" }}>
-                    <div style={{ fontWeight:700, fontSize:13, color:T.primary, marginBottom:8 }}>Start a Transaction →</div>
-                    <Btn variant="accent" style={{ fontSize:13, padding:"8px 18px" }} onClick={onSignup}>Get Started Free</Btn>
-                  </div>
+
+              {/* Expandable children */}
+              {mobileExpanded === item.label && (
+                <div style={{ background:T.offWhite, paddingBottom:8 }}>
+                  {item.children.map(ch => (
+                    <button
+                      key={ch.label}
+                      style={{ width:"100%", background:"none", border:"none", cursor:"pointer", textAlign:"left", padding:"10px 1.5rem 10px 2rem" }}
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      <div style={{ fontWeight:600, fontSize:14, color:T.gray900 }}>{ch.label}</div>
+                      <div style={{ fontSize:12, color:T.gray500, marginTop:2 }}>{ch.desc}</div>
+                    </button>
+                  ))}
                 </div>
               )}
             </div>
           ))}
-        </div>
 
-        <div className="nav-desktop" style={{ display:"flex", alignItems:"center", gap:10, marginLeft:16, flexShrink:0 }}>
-          <Btn variant="ghost" onClick={onLogin} style={{ fontSize:14 }}>Login</Btn>
-          <Btn variant="accent" onClick={onSignup} style={{ fontSize:14, padding:"10px 22px" }}>Sign Up Free →</Btn>
-        </div>
-
-        {/* Mobile menu button */}
-        <button className="mobile-menu-btn" onClick={() => setMobileOpen(o=>!o)} style={{ display:"none", marginLeft:"auto", background:"none", border:"none", cursor:"pointer", flexDirection:"column", gap:5, padding:8 }}>
-          {[0,1,2].map(i => <span key={i} style={{ display:"block", width:24, height:2, background:T.gray700, borderRadius:2 }} />)}
-        </button>
-      </div>
-
-      {/* Mobile menu */}
-      {mobileOpen && (
-        <div style={{ background:T.white, borderTop:`1px solid ${T.gray100}`, padding:"16px 1.5rem 24px" }}>
-          {NAV_ITEMS.map(item => (
-            <div key={item.label}>
-              <div style={{ fontWeight:700, fontSize:14, color:T.primary, padding:"10px 0", borderBottom:`1px solid ${T.gray100}` }}>{item.label}</div>
-              {item.children.map(ch => (
-                <div key={ch.label} style={{ fontSize:14, color:T.gray700, padding:"8px 12px" }}>{ch.label}</div>
-              ))}
-            </div>
-          ))}
-          <div style={{ display:"flex", flexDirection:"column", gap:10, marginTop:20 }}>
-            <Btn variant="outline" onClick={onLogin} style={{ width:"100%" }}>Login</Btn>
-            <Btn variant="accent" onClick={onSignup} style={{ width:"100%" }}>Sign Up Free →</Btn>
+          {/* CTA buttons */}
+          <div style={{ display:"flex", flexDirection:"column", gap:10, padding:"16px 1.5rem 24px" }}>
+            <Btn variant="outline" onClick={() => { onLogin(); setMobileOpen(false); }} style={{ width:"100%" }}>Login</Btn>
+            <Btn variant="accent" onClick={() => { onSignup(); setMobileOpen(false); }} style={{ width:"100%" }}>Sign Up Free →</Btn>
           </div>
         </div>
       )}
-    </nav>
+    </>
   );
 };
-
 /* ─── HERO ───────────────────────────────────────────────── */
 const TX_TYPES = [
   { id:"domain",      icon:"🌐", label:"Domain Names",      color:"#3b82f6" },
@@ -309,12 +353,12 @@ const Hero = ({ onSignup }) => {
 
 /* ─── STATS BANNER ───────────────────────────────────────── */
 const StatsBanner = () => (
-  <section style={{ background:`linear-gradient(90deg,${T.accent},#e07010)`, color:T.white, padding:"28px 1.5rem" }}>
+  <section style={{ background: T.white, borderTop: `1px solid ${T.gray100}`, borderBottom: `1px solid ${T.gray100}`, padding:"28px 1.5rem" }}>
     <div className="stats-row" style={{ maxWidth:1280, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:16, textAlign:"center" }}>
       {[["$5B+","Total value protected"],["1.8M+","Customers worldwide"],["Since 2005","Trusted escrow service"],["From 1%","Low transparent fees"]].map(([n,l]) => (
-        <div key={l}>
-          <div style={{ fontFamily:"'Lora',serif", fontWeight:700, fontSize:"clamp(18px,3vw,28px)", letterSpacing:"-0.4px" }}>{n}</div>
-          <div style={{ fontSize:13, opacity:0.82, marginTop:3 }}>{l}</div>
+        <div key={l} style={{ padding:"16px 12px", borderRadius:12, background:T.offWhite, border:`1px solid ${T.gray100}` }}>
+          <div style={{ fontFamily:"'Lora',serif", fontWeight:700, fontSize:"clamp(18px,3vw,28px)", letterSpacing:"-0.4px", color:T.primary }}>{n}</div>
+          <div style={{ fontSize:13, color:T.gray500, marginTop:3 }}>{l}</div>
         </div>
       ))}
     </div>
@@ -680,16 +724,15 @@ const FAQ = () => {
 /* ─── CTA BANNER ─────────────────────────────────────────── */
 const CTABanner = ({ onSignup }) => (
   <section style={{ padding:"0 1.5rem 90px" }}>
-    <div className="cta-banner" style={{ maxWidth:1240, margin:"0 auto", background:`linear-gradient(135deg,${T.accent},#c96a00)`, borderRadius:20, padding:"clamp(36px,5vw,64px) clamp(28px,5vw,60px)", display:"flex", alignItems:"center", justifyContent:"space-between", gap:36 }}>
+    <div className="cta-banner" style={{ maxWidth:1240, margin:"0 auto", background:`linear-gradient(135deg,${T.primary},${T.primaryDk})`, borderRadius:20, padding:"clamp(36px,5vw,64px) clamp(28px,5vw,60px)", display:"flex", alignItems:"center", justifyContent:"space-between", gap:36 }}>
       <div>
         <h2 style={{ fontFamily:"'Lora',serif", fontSize:"clamp(26px,3.5vw,40px)", color:T.white, fontWeight:700, letterSpacing:"-0.5px", lineHeight:1.2, marginBottom:10 }}>Ready to transact safely?</h2>
-        <p style={{ fontSize:16, color:"rgba(255,255,255,0.75)" }}>Free to join. Fee only charged on successful transactions.</p>
+        <p style={{ fontSize:16, color:"rgba(255,255,255,0.65)" }}>Free to join. Fee only charged on successful transactions.</p>
       </div>
-      <Btn onClick={onSignup} style={{ background:T.white, color:T.accent, fontSize:16, padding:"14px 32px", flexShrink:0, fontWeight:800, borderRadius:10 }}>Create Free Account →</Btn>
+      <Btn onClick={onSignup} style={{ background:T.white, color:T.primary, fontSize:16, padding:"14px 32px", flexShrink:0, fontWeight:800, borderRadius:10 }}>Create Free Account →</Btn>
     </div>
   </section>
 );
-
 /* ─── AUTH MODAL ─────────────────────────────────────────── */
 const AuthModal = ({ mode, onClose, onSuccess, switchMode }) => {
   const [form, setForm]   = useState({ name:"", email:"", password:"", confirm:"" });
