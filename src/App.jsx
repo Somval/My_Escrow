@@ -42,7 +42,18 @@ const CSS = `
   @media(max-width:1024px){.g4{grid-template-columns:repeat(2,1fr)!important;}.g3{grid-template-columns:repeat(2,1fr)!important;}.g2{grid-template-columns:1fr!important;}.fg{grid-template-columns:1fr 1fr!important;}}
   @media(max-width:768px){.g4{grid-template-columns:1fr 1fr!important;}.g5{grid-template-columns:1fr 1fr!important;}.g3{grid-template-columns:1fr!important;}.g2{grid-template-columns:1fr!important;}.hg{grid-template-columns:1fr!important;}.fg{grid-template-columns:1fr!important;}.ndsk{display:none!important;}.mbb{display:flex!important;}.feeg{grid-template-columns:1fr!important;}.dg{grid-template-columns:1fr!important;}.hcta{flex-direction:column!important;}.ctar{flex-direction:column!important;text-align:center!important;}}
   @media(max-width:480px){.g4{grid-template-columns:1fr!important;}.g5{grid-template-columns:1fr!important;}.sg{grid-template-columns:1fr 1fr!important;}}
+  /* dashboard responsive */
+  .dash-kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  @media(max-width:860px){.dash-tabs{display:none!important;}.dash-kpi{grid-template-columns:1fr 1fr!important;}}
+  @media(max-width:768px){.dg{grid-template-columns:1fr!important;}.tx-tbl{display:none!important;}.tx-mob{display:flex!important;}.g2-dash{grid-template-columns:1fr!important;}.g3-dash{grid-template-columns:1fr!important;}.hist-row{flex-direction:column!important;}}
+  @media(max-width:480px){.dash-kpi{grid-template-columns:1fr 1fr!important;}.modal-grid{grid-template-columns:1fr!important;}}
+  .dash-drawer{position:fixed;top:0;left:0;bottom:0;width:268px;background:#fbf9fc;border-right:1px solid #c5c6cf;z-index:149;display:flex;flex-direction:column;box-shadow:4px 0 24px rgba(0,0,0,.13);transform:translateX(-100%);transition:transform .24s ease;}
+  .dash-drawer.open{transform:translateX(0);}
+  .dash-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:148;}
+  .dash-overlay.show{display:block;}
+  @media(min-width:861px){.mob-menu-btn{display:none!important;}}
 `;
+
 
 /* ═══ PRIMITIVES ════════════════════════════════════════════ */
 const Btn = ({children,variant="primary",onClick,style,className="",disabled,type="button"})=>{
@@ -116,8 +127,8 @@ const Navbar=({onLogin,onSignup,navigate})=>{
     <nav style={{background:T.white,position:"sticky",top:0,zIndex:300,boxShadow:sc?"0 2px 20px rgba(0,0,0,.1)":"0 1px 0 #e2e8f0",transition:"box-shadow .2s"}}>
       <div style={{maxWidth:1280,margin:"0 auto",padding:"0 1.5rem",display:"flex",alignItems:"center",height:64}}>
         <div style={{display:"flex",alignItems:"center",gap:10,cursor:"pointer",flexShrink:0}} onClick={()=>{navigate("home");setMob(false);}}>
-          <div style={{width:38,height:38,background:`linear-gradient(135deg,${T.primary},${T.primaryDk})`,borderRadius:10,display:"flex",alignItems:"center",justifyContent:"center"}}><span style={{color:T.white,fontWeight:800,fontSize:18,fontFamily:"'Inter',sans-serif"}}>E</span></div>
-          <span style={{fontWeight:800,fontSize:20,color:T.primary,letterSpacing:"-.4px"}}><span style={{color:T.green}}>Escrow</span></span>
+          <div style={{width:38,height:38,background:`linear-gradient(135deg,${T.primary},${T.primaryDk})`,borderRadius:10,display:"flex",alignItems:"center",justifyContent:"center"}}><span style={{color:T.white,fontWeight:800,fontSize:18,fontFamily:"'Inter',sans-serif"}}>V</span></div>
+          <span style={{fontWeight:800,fontSize:20,color:T.primary,letterSpacing:"-.4px"}}>Vault<span style={{color:T.green}}>Pay</span></span>
         </div>
         <div className="ndsk" style={{display:"flex",alignItems:"center",gap:2,marginLeft:28,flex:1}}>
           {NAV.map(item=>(
@@ -175,7 +186,7 @@ const Hero=({onSignup})=>{
         <div>
           <div style={{marginBottom:18}}><Badge color={T.secondary||T.green} sz="md">AI-Powered Tech Services Escrow</Badge></div>
           <h1 className="fu" style={{fontFamily:"'Inter',sans-serif",fontSize:"clamp(30px,4.5vw,54px)",fontWeight:700,lineHeight:1.15,marginBottom:20,letterSpacing:"-.5px"}}>Secure escrow for<br/>tech services — with<br/><span style={{color:T.gold}}>built-in AI auditing</span></h1>
-          <p className="fu2" style={{fontSize:"clamp(14px,1.8vw,16px)",color:"rgba(255,255,255,.75)",lineHeight:1.85,marginBottom:36,maxWidth:480}}>Escrow holds client payments for software, design, and cloud projects — releasing funds only after AI confirms deliverables meet the agreed scope. No chargebacks. No fraud. Full protection for both sides.</p>
+          <p className="fu2" style={{fontSize:"clamp(14px,1.8vw,16px)",color:"rgba(255,255,255,.75)",lineHeight:1.85,marginBottom:36,maxWidth:480}}>VaultPay holds client payments for software, design, and cloud projects — releasing funds only after AI confirms deliverables meet the agreed scope. No chargebacks. No fraud. Full protection for both sides.</p>
           <div className="hcta fu3" style={{display:"flex",gap:12,flexWrap:"wrap",marginBottom:40}}>
             <Btn variant="accent" style={{fontSize:15,padding:"13px 28px"}} onClick={onSignup}>Start a Project →</Btn>
             <Btn variant="outlineW" style={{fontSize:15,padding:"13px 24px"}}>See How It Works</Btn>
@@ -440,7 +451,7 @@ const Enterprise=({onSignup})=>(
           {icon:"check_circle",title:"Approval Workflows",        desc:"Require internal sign-off before releasing escrow funds. Multi-stage approval chains with full audit trail."},
           {icon:"bar_chart",title:"Advanced Reporting",        desc:"Transaction volume, fee summaries, dispute rates, AI audit pass rates. Export to CSV or via the API."},
           {icon:"cable",title:"API Integrations",          desc:"Full REST API with webhooks, sandbox, and SDKs for Node.js, Python, PHP, and Go."},
-          {icon:"local_offer",title:"White-Label Escrow",        desc:"Use your own domain, logo, and brand colours. Clients see your brand — not Escrow."},
+          {icon:"local_offer",title:"White-Label Escrow",        desc:"Use your own domain, logo, and brand colours. Clients see your brand — not VaultPay."},
           {icon:"handshake",title:"Dedicated Account Manager", desc:"Assigned account manager for onboarding, support, and custom integration assistance."},
           {icon:"assignment",title:"Custom SLA",                desc:"Guaranteed 99.9% uptime, priority support queue, and custom dispute resolution timelines."},
         ].map(f=>(
@@ -489,9 +500,9 @@ const Security=()=>(
 const Testimonials=()=>(
   <section style={{padding:"90px 1.5rem",background:T.offWhite}}>
     <div style={{maxWidth:1280,margin:"0 auto"}}>
-      <ST badge="Client Stories" title="1.8M+ customers trust Escrow"/>
+      <ST badge="Client Stories" title="1.8M+ customers trust VaultPay"/>
       <div className="g3" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:22}}>
-        {[{n:"Tunde A.", r:"Startup CTO",     t:"We used Escrow for a $40k backend build. The AI audit caught a missing API endpoint before we released payment. Worth every cent.",stars:5},
+        {[{n:"Tunde A.", r:"Startup CTO",     t:"We used VaultPay for a $40k backend build. The AI audit caught a missing API endpoint before we released payment. Worth every cent.",stars:5},
           {n:"Sarah K.", r:"Product Manager", t:"The AI scope generator saved me two hours of back-and-forth. Incredible platform — exactly what tech services have always needed.",stars:5},
           {n:"David L.", r:"Freelance Dev",   t:"As a provider I love that clients can't withhold payment arbitrarily. The AI audit proves the work is complete. Total peace of mind.",stars:5},
           {n:"Aisha M.", r:"Agency Director", t:"We ran three simultaneous projects. The health monitor flagged one going off-track early. Dispute avoided entirely.",stars:5},
@@ -516,7 +527,7 @@ const Testimonials=()=>(
 const FAQ=()=>{
   const [op,setOp]=useState(null);
   const qs=[
-    {q:"What makes Escrow different from regular escrow?",a:"Escrow is built specifically for tech services. Every transaction includes AI scope generation, contract drafting, deliverable auditing, fraud detection, and dispute assistance — so both parties always agree on what 'done' means before any money moves."},
+    {q:"What makes VaultPay different from regular escrow?",a:"VaultPay is built specifically for tech services. Every transaction includes AI scope generation, contract drafting, deliverable auditing, fraud detection, and dispute assistance — so both parties always agree on what 'done' means before any money moves."},
     {q:"How does the AI Deliverable Auditor work?",a:"When a provider submits work, the Auditor checks it against the agreed scope. For code it analyses the repo structure, test coverage, and feature completeness. For websites it crawls the live URL. For designs it compares files against the brief. For documents it checks completeness against the agreed table of contents."},
     {q:"What are the 9 steps of the escrow workflow?",a:"Project Creation → Contract Generation → Escrow Funding → Project Execution → Deliverable Submission → AI Audit → Approval / Revision Request → Payment Release → Dispute Resolution (if needed). Every step is tracked and timestamped."},
     {q:"What happens during a dispute?",a:"The AI Dispute Assistant automatically reconstructs the project timeline, analyses all messages and files, and produces an objective case brief. A Dispute Resolution Officer reviews and issues a binding decision within 5 business days. Both parties can upload evidence."},
@@ -587,9 +598,9 @@ const AuthShell=({children,navigate})=>(
     <header style={{background:"#fff",borderBottom:"1px solid #e4e2e5",height:64,display:"flex",alignItems:"center",justifyContent:"space-between",padding:"0 1.5rem",position:"sticky",top:0,zIndex:10,boxShadow:"0 1px 0 #e4e2e5"}}>
       <div style={{display:"flex",alignItems:"center",gap:10,cursor:"pointer"}} onClick={()=>navigate("home")}>
         <div style={{width:36,height:36,background:"linear-gradient(135deg,#1a56a0,#0f3d7a)",borderRadius:9,display:"flex",alignItems:"center",justifyContent:"center"}}>
-          <span style={{color:"#fff",fontWeight:800,fontSize:17,fontFamily:"'Inter',sans-serif"}}>E</span>
+          <span style={{color:"#fff",fontWeight:800,fontSize:17,fontFamily:"'Inter',sans-serif"}}>V</span>
         </div>
-        <span style={{fontWeight:800,fontSize:19,color:"#001637",letterSpacing:"-.4px"}}><span style={{color:"#006c47"}}>Escrow</span></span>
+        <span style={{fontWeight:800,fontSize:19,color:"#001637",letterSpacing:"-.4px"}}>Vault<span style={{color:"#006c47"}}>Pay</span></span>
       </div>
     </header>
     {/* Content */}
@@ -620,7 +631,7 @@ const LoginPage=({onSuccess,navigate})=>{
             <span className="msym" style={{fontSize:28,color:"#fff"}}>shield_lock</span>
           </div>
           <h1 style={{fontFamily:"'Inter',sans-serif",fontSize:28,fontWeight:700,color:"#001637",letterSpacing:"-.4px",marginBottom:6}}>Welcome back</h1>
-          <p style={{fontSize:14,color:"#44474e",lineHeight:1.6}}>Sign in to your Escrow account</p>
+          <p style={{fontSize:14,color:"#44474e",lineHeight:1.6}}>Sign in to your VaultPay account</p>
         </div>
         <div className="auth-card">
           {done?(
@@ -682,7 +693,7 @@ const LoginPage=({onSuccess,navigate})=>{
               </div>
               {/* Footer link */}
               <p style={{textAlign:"center",fontSize:13.5,color:"#44474e",borderTop:"1px solid #e4e2e5",paddingTop:16,margin:0}}>
-                New to Escrow?{" "}
+                New to VaultPay?{" "}
                 <span style={{color:"#001637",fontWeight:700,cursor:"pointer"}} onClick={()=>navigate("signup")}>Create a free account →</span>
               </p>
             </form>
@@ -866,7 +877,7 @@ const ForgotPasswordPage=({navigate})=>{
           )}
         </div>
         <p style={{textAlign:"center",marginTop:16,fontSize:11.5,color:"#75777f",lineHeight:1.6}}>
-          Escrow uses bank-grade encryption to protect your account and financial transactions.
+          VaultPay uses bank-grade encryption to protect your account and financial transactions.
         </p>
       </div>
     </AuthShell>
@@ -942,7 +953,7 @@ const ScopeModal=({catLabel,onClose,onApply})=>{
   const gen=async()=>{
     if(!desc.trim())return;setLd(true);
     try{
-      const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,messages:[{role:"user",content:`You are Escrow's AI Scope Generator for tech services escrow.\nCategory: ${catLabel}\nClient brief: ${desc}\nReturn ONLY valid JSON:\n{"title":"short project title","overview":"2-sentence overview","deliverables":["item1","item2","item3","item4","item5"],"milestones":[{"name":"name","description":"what's delivered","timeline":"e.g. Week 2"}],"acceptance":["criterion1","criterion2","criterion3"],"timeline":"total timeline","revisions":"revision policy"}`}]})});
+      const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,messages:[{role:"user",content:`You are VaultPay's AI Scope Generator for tech services escrow.\nCategory: ${catLabel}\nClient brief: ${desc}\nReturn ONLY valid JSON:\n{"title":"short project title","overview":"2-sentence overview","deliverables":["item1","item2","item3","item4","item5"],"milestones":[{"name":"name","description":"what's delivered","timeline":"e.g. Week 2"}],"acceptance":["criterion1","criterion2","criterion3"],"timeline":"total timeline","revisions":"revision policy"}`}]})});
       const d=await r.json();const txt=d.content?.map(i=>i.text||"").join("").replace(/```json|```/g,"").trim();setRes(JSON.parse(txt));
     }catch{setRes({title:"Tech Services Project",overview:"Development project as described, completed per agreed milestones with AI verification.",deliverables:["Core application development","API integrations","Testing & QA","Deployment","Documentation"],milestones:[{name:"Foundation",description:"Core setup and architecture",timeline:"Week 1–2"},{name:"Core Development",description:"Main features",timeline:"Week 3–5"},{name:"Delivery",description:"Testing and deployment",timeline:"Week 6"}],acceptance:["All features work as specified","Code passes automated tests","Documentation complete","Delivered on time"],timeline:"6 weeks",revisions:"2 rounds of revisions per milestone"});}
     setLd(false);
@@ -999,7 +1010,7 @@ const ContractModal=({tx,scope,onClose})=>{
       try{
         const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1200,messages:[{role:"user",content:`Generate a professional tech services escrow agreement.\nProject: ${tx?.title||"Tech Services Project"}\nCategory: ${tx?.type||"Software Development"}\nValue: $${tx?.amount?.toLocaleString()||"TBD"} ${tx?.currency||"USD"}\nProvider: ${tx?.other||"[Provider]"}\nScope: ${scope?JSON.stringify(scope):"As agreed"}\n\nWrite a concise, professional escrow agreement covering: parties, project, deliverables, payment terms, milestone structure, revision policy, escrow terms, dispute resolution, governing law. No markdown — use numbered sections.`}]})});
         const d=await r.json();setContract(d.content?.map(i=>i.text||"").join("")||"");
-      }catch{setContract(`TECH SERVICES ESCROW AGREEMENT\n\n1. PARTIES\nThis Agreement is between the Client and Service Provider, facilitated by Escrow Escrow Services ("Escrow Agent").\n\n2. PROJECT SCOPE\nThe Service Provider agrees to deliver "${tx?.title}" as described in the attached scope document within the agreed timeline.\n\n3. PAYMENT TERMS\nTotal project value: $${tx?.amount?.toLocaleString()||"TBD"} ${tx?.currency||"USD"}. Funds held in Escrow's regulated trust account until deliverables are accepted.\n\n4. MILESTONE PAYMENTS\nPayments released per milestone upon Client approval following AI audit confirmation.\n\n5. REVISION POLICY\nClient is entitled to two (2) revision rounds per milestone. Additional revisions quoted separately.\n\n6. DISPUTE RESOLUTION\nUnresolved disputes submitted to Escrow's Dispute Resolution Officer. Decision binding within 5 business days.\n\n7. ESCROW TERMS\nFunds held in segregated, regulated trust accounts. Released only on Client approval or binding dispute resolution.\n\n8. GOVERNING LAW\nThis Agreement is governed by applicable jurisdiction law.`);}
+      }catch{setContract(`TECH SERVICES ESCROW AGREEMENT\n\n1. PARTIES\nThis Agreement is between the Client and Service Provider, facilitated by VaultPay Escrow Services ("Escrow Agent").\n\n2. PROJECT SCOPE\nThe Service Provider agrees to deliver "${tx?.title}" as described in the attached scope document within the agreed timeline.\n\n3. PAYMENT TERMS\nTotal project value: $${tx?.amount?.toLocaleString()||"TBD"} ${tx?.currency||"USD"}. Funds held in VaultPay's regulated trust account until deliverables are accepted.\n\n4. MILESTONE PAYMENTS\nPayments released per milestone upon Client approval following AI audit confirmation.\n\n5. REVISION POLICY\nClient is entitled to two (2) revision rounds per milestone. Additional revisions quoted separately.\n\n6. DISPUTE RESOLUTION\nUnresolved disputes submitted to VaultPay's Dispute Resolution Officer. Decision binding within 5 business days.\n\n7. ESCROW TERMS\nFunds held in segregated, regulated trust accounts. Released only on Client approval or binding dispute resolution.\n\n8. GOVERNING LAW\nThis Agreement is governed by applicable jurisdiction law.`);}
       setLd(false);
     })();
   },[]);
@@ -1015,7 +1026,7 @@ const ContractModal=({tx,scope,onClose})=>{
             <div style={{textAlign:"center",padding:"48px 0"}}><span className="msym" style={{fontSize:42,color:T.primary,display:"block",marginBottom:14,animation:"pulse 1.5s ease infinite"}}>description</span><div style={{fontWeight:700,fontSize:16,color:T.primary,marginBottom:8}}>Generating contract…</div><p style={{fontSize:13,color:T.gray500}}>AI is drafting a legally-sound escrow agreement.</p></div>
           ):(
             <>
-              <div style={{background:"#eef2ff",border:"1px solid #c7d2fe",borderRadius:10,padding:"13px 15px",fontSize:13,color:"#3730a3",lineHeight:1.65,marginBottom:20}}><span className="msym" style={{fontSize:16,verticalAlign:"middle",marginRight:6}}>check_circle</span>Contract generated by Escrow AI. Review before both parties sign.</div>
+              <div style={{background:"#eef2ff",border:"1px solid #c7d2fe",borderRadius:10,padding:"13px 15px",fontSize:13,color:"#3730a3",lineHeight:1.65,marginBottom:20}}><span className="msym" style={{fontSize:16,verticalAlign:"middle",marginRight:6}}>check_circle</span>Contract generated by VaultPay AI. Review before both parties sign.</div>
               <div style={{background:T.offWhite,borderRadius:12,padding:"20px 22px",fontSize:13,color:T.gray700,lineHeight:2,whiteSpace:"pre-wrap",fontFamily:"Georgia, serif"}}>{contract}</div>
             </>
           )}
@@ -1038,7 +1049,7 @@ const AuditModal=({tx,onClose,onApprove,onRevision})=>{
   useEffect(()=>{
     (async()=>{
       try{
-        const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,messages:[{role:"user",content:`You are Escrow's AI Deliverable Auditor. Analyse this project.\nTransaction: ${tx.id}\nProject: ${tx.title}\nCategory: ${tx.type}\nValue: $${tx.amount?.toLocaleString()} ${tx.currency||"USD"}\nProvider: ${tx.other}\nReturn ONLY valid JSON:\n{"score":0-100,"status":"passed"|"passed_with_notes"|"revision_required","summary":"2-sentence executive summary","risk":"low"|"medium"|"high","riskScore":0-100,"checks":[{"name":"check name","status":"passed"|"warning"|"failed","note":"detail"}],"recommendation":"one clear sentence"}`}]})});
+        const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,messages:[{role:"user",content:`You are VaultPay's AI Deliverable Auditor. Analyse this project.\nTransaction: ${tx.id}\nProject: ${tx.title}\nCategory: ${tx.type}\nValue: $${tx.amount?.toLocaleString()} ${tx.currency||"USD"}\nProvider: ${tx.other}\nReturn ONLY valid JSON:\n{"score":0-100,"status":"passed"|"passed_with_notes"|"revision_required","summary":"2-sentence executive summary","risk":"low"|"medium"|"high","riskScore":0-100,"checks":[{"name":"check name","status":"passed"|"warning"|"failed","note":"detail"}],"recommendation":"one clear sentence"}`}]})});
         const d=await r.json();const txt=d.content?.map(i=>i.text||"").join("").replace(/```json|```/g,"").trim();setRes(JSON.parse(txt));
       }catch{setRes({score:84,status:"passed_with_notes",summary:"Core deliverables reviewed against scope. Requirements substantially met with minor observations.",risk:"low",riskScore:18,checks:[{name:"Scope Completion",status:"passed",note:"All primary deliverables submitted"},{name:"Code Quality",status:"passed",note:"No critical issues detected"},{name:"Test Coverage",status:"warning",note:"Coverage at 62% — below 70% target"},{name:"Documentation",status:"warning",note:"README missing deployment instructions"},{name:"Security Review",status:"passed",note:"No known vulnerabilities found"},{name:"Deadline Compliance",status:"passed",note:"Submitted within agreed timeline"}],recommendation:"Recommend approval with a note to improve test coverage and deployment docs."});}
       setLd(false);
@@ -1110,7 +1121,7 @@ const DisputeModal=({tx,onClose,onSubmit})=>{
   const sub=async()=>{
     if(!reason||!desc)return;setLd(true);
     try{
-      const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:600,messages:[{role:"user",content:`You are Escrow's AI Dispute Assistant.\nTransaction: ${tx.title}\nCategory: ${tx.type}\nValue: $${tx.amount?.toLocaleString()}\nProvider: ${tx.other}\nReason: ${reason}\nDescription: ${desc}\nEvidence files: ${files.length>0?files.join(", "):"None"}\nGenerate a neutral 3-4 sentence dispute case summary covering: (1) nature of dispute, (2) key facts from both perspectives, (3) recommended resolution. Plain text only.`}]})});
+      const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:600,messages:[{role:"user",content:`You are VaultPay's AI Dispute Assistant.\nTransaction: ${tx.title}\nCategory: ${tx.type}\nValue: $${tx.amount?.toLocaleString()}\nProvider: ${tx.other}\nReason: ${reason}\nDescription: ${desc}\nEvidence files: ${files.length>0?files.join(", "):"None"}\nGenerate a neutral 3-4 sentence dispute case summary covering: (1) nature of dispute, (2) key facts from both perspectives, (3) recommended resolution. Plain text only.`}]})});
       const d=await r.json();setSumm(d.content?.map(i=>i.text||"").join("")||"Dispute filed. Our team will contact both parties within 24 hours.");
     }catch{setSumm("A dispute has been filed. Our Dispute Resolution Officer will review all communications and deliverables and contact both parties with a resolution within 5 business days.");}
     setLd(false);setDone(true);onSubmit();
@@ -1180,7 +1191,7 @@ const AdminPanel=({onBack})=>{
     <div style={{background:T.offWhite,minHeight:"100vh"}}>
       <div style={{background:"linear-gradient(135deg,#1e1b4b,#3730a3)",color:T.white,padding:"0 1.5rem"}}>
         <div style={{maxWidth:1280,margin:"0 auto",display:"flex",alignItems:"center",height:60,gap:16}}>
-          <div style={{fontWeight:800,fontSize:18,cursor:"pointer"}} onClick={onBack}><span style={{color:T.green}}>Escrow</span> <span style={{fontSize:12,opacity:.6,fontWeight:400}}>Admin</span></div>
+          <div style={{fontWeight:800,fontSize:18,cursor:"pointer"}} onClick={onBack}>Vault<span style={{color:T.green}}>Pay</span> <span style={{fontSize:12,opacity:.6,fontWeight:400}}>Admin</span></div>
           <div style={{display:"flex",gap:0,marginLeft:12,overflowX:"auto"}}>
             {[["overview","Overview"],["transactions","All Transactions"],["disputes","Disputes"],["users","Users"],["kyc","KYC Queue"]].map(([k,l])=><button key={k} onClick={()=>setTab(k)} style={{background:"none",border:"none",cursor:"pointer",padding:"8px 13px",fontSize:13,fontWeight:600,color:tab===k?T.gold:"rgba(255,255,255,.55)",borderBottom:tab===k?`2px solid ${T.gold}`:"2px solid transparent",transition:"all .15s",whiteSpace:"nowrap"}}>{l}</button>)}
           </div>
@@ -1259,117 +1270,7 @@ const AdminPanel=({onBack})=>{
   );
 };
 
-/* ═══ DASHBOARD ═════════════════════════════════════════════ */
-/* ═══ SETTINGS TAB (bento-grid) ═════════════════════════════ */
-const SettingsTab=({user})=>{
-  const [notifs,setNotifs]=useState({email:true,sms:false,push:true});
-  const [privDiscovery,setPrivDiscovery]=useState(true);
-  const [privMarketing,setPrivMarketing]=useState(false);
-  const Toggle=({on,onToggle})=>(
-    <div onClick={onToggle} style={{width:40,height:22,borderRadius:20,background:on?"#006c47":"#c5c6cf",position:"relative",cursor:"pointer",transition:"background .2s",flexShrink:0}}>
-      <div style={{position:"absolute",top:3,left:on?undefined:3,right:on?3:undefined,width:16,height:16,background:"#fff",borderRadius:"50%",transition:"all .2s"}}/>
-    </div>
-  );
-  return(
-    <div>
-      <div style={{marginBottom:16}}>
-        <h2 style={{fontSize:28,fontWeight:700,color:"#1b1b1e",marginBottom:4}}>Account Settings</h2>
-        <p style={{fontSize:15,color:"#44474e"}}>Manage your security preferences and personal information.</p>
-      </div>
-      <div className="dg" style={{display:"grid",gridTemplateColumns:"1fr 320px",gap:16,alignItems:"start"}}>
-        {/* Left — security bento */}
-        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
-          {/* 2FA Card */}
-          <div style={{background:"#fff",border:"1px solid #c5c6cf",borderRadius:16,padding:24,display:"flex",flexDirection:"column",justifyContent:"space-between",minHeight:180,transition:"box-shadow .2s"}} onMouseEnter={e=>e.currentTarget.style.boxShadow="0 4px 20px rgba(0,0,0,.1)"} onMouseLeave={e=>e.currentTarget.style.boxShadow="none"}>
-            <div>
-              <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
-                <span className="msym" style={{fontSize:22,color:"#001637",fontVariationSettings:"'FILL' 1"}}>verified_user</span>
-                <h3 style={{fontSize:17,fontWeight:700,color:"#1b1b1e"}}>Two-Factor Authentication</h3>
-              </div>
-              <p style={{fontSize:13.5,color:"#44474e",lineHeight:1.65,marginBottom:18}}>Add an extra layer of security to your account by requiring a code from your phone.</p>
-            </div>
-            <button style={{background:"#001637",color:"#fff",border:"none",borderRadius:10,padding:"10px 18px",fontSize:13,fontWeight:700,cursor:"pointer",alignSelf:"flex-start",transition:"opacity .15s"}} onMouseEnter={e=>e.currentTarget.style.opacity=".85"} onMouseLeave={e=>e.currentTarget.style.opacity="1"}>Enable 2FA</button>
-          </div>
-          {/* Login Activity Card */}
-          <div style={{background:"#fff",border:"1px solid #c5c6cf",borderRadius:16,padding:24,transition:"box-shadow .2s"}} onMouseEnter={e=>e.currentTarget.style.boxShadow="0 4px 20px rgba(0,0,0,.1)"} onMouseLeave={e=>e.currentTarget.style.boxShadow="none"}>
-            <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:14}}>
-              <span className="msym" style={{fontSize:20,color:"#001637"}}>devices</span>
-              <h3 style={{fontSize:17,fontWeight:700,color:"#1b1b1e"}}>Login Activity</h3>
-            </div>
-            <div>
-              <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",paddingBottom:10,borderBottom:"1px solid #c5c6cf",marginBottom:10}}>
-                <div>
-                  <div style={{fontSize:13,fontWeight:600,color:"#1b1b1e"}}>Current Device</div>
-                  <div style={{fontSize:11,color:"#44474e",marginTop:2}}>Current Session</div>
-                </div>
-                <span style={{background:"#82f9be",color:"#00734c",fontSize:11,fontWeight:700,padding:"2px 10px",borderRadius:20}}>Active</span>
-              </div>
-              <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-                <div>
-                  <div style={{fontSize:13,fontWeight:600,color:"#1b1b1e"}}>Mobile • Lagos</div>
-                  <div style={{fontSize:11,color:"#44474e",marginTop:2}}>2 hours ago</div>
-                </div>
-                <button style={{background:"none",border:"none",color:"#001637",fontSize:13,fontWeight:700,cursor:"pointer",padding:0}}>Revoke</button>
-              </div>
-            </div>
-          </div>
-          {/* Privacy & Data — full width */}
-          <div style={{gridColumn:"1 / -1",background:"#fff",border:"1px solid #c5c6cf",borderRadius:16,padding:24,transition:"box-shadow .2s"}} onMouseEnter={e=>e.currentTarget.style.boxShadow="0 4px 20px rgba(0,0,0,.1)"} onMouseLeave={e=>e.currentTarget.style.boxShadow="none"}>
-            <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:16}}>
-              <span className="msym" style={{fontSize:20,color:"#001637"}}>visibility</span>
-              <h3 style={{fontSize:17,fontWeight:700,color:"#1b1b1e"}}>Privacy & Data</h3>
-            </div>
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:20}}>
-              <label style={{display:"flex",alignItems:"flex-start",gap:12,cursor:"pointer"}}>
-                <input type="checkbox" checked={privDiscovery} onChange={e=>setPrivDiscovery(e.target.checked)} style={{accentColor:"#001637",width:16,height:16,marginTop:2,flexShrink:0}}/>
-                <div>
-                  <div style={{fontSize:13.5,fontWeight:600,color:"#1b1b1e",marginBottom:3}}>Public Profile Discovery</div>
-                  <p style={{fontSize:12.5,color:"#44474e",lineHeight:1.6}}>Allow other users to find you by email or name during escrow setup.</p>
-                </div>
-              </label>
-              <label style={{display:"flex",alignItems:"flex-start",gap:12,cursor:"pointer"}}>
-                <input type="checkbox" checked={privMarketing} onChange={e=>setPrivMarketing(e.target.checked)} style={{accentColor:"#001637",width:16,height:16,marginTop:2,flexShrink:0}}/>
-                <div>
-                  <div style={{fontSize:13.5,fontWeight:600,color:"#1b1b1e",marginBottom:3}}>Marketing Communications</div>
-                  <p style={{fontSize:12.5,color:"#44474e",lineHeight:1.6}}>Receive updates about new features and secure trading tips.</p>
-                </div>
-              </label>
-            </div>
-          </div>
-        </div>
-        {/* Right sidebar */}
-        <div style={{display:"flex",flexDirection:"column",gap:16}}>
-          {/* Notifications */}
-          <div style={{background:"#fff",border:"1px solid #c5c6cf",borderRadius:16,padding:24,boxShadow:"0 1px 4px rgba(0,0,0,.04)"}}>
-            <h3 style={{fontSize:17,fontWeight:700,color:"#1b1b1e",marginBottom:20}}>Notification Channels</h3>
-            <div style={{display:"flex",flexDirection:"column",gap:18}}>
-              {[["email","mail","Email"],["sms","sms","SMS Alerts"],["push","notifications","Push"]].map(([k,icon,label])=>(
-                <div key={k} style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-                  <div style={{display:"flex",alignItems:"center",gap:12}}>
-                    <span className="msym" style={{fontSize:20,color:"#44474e"}}>{icon}</span>
-                    <span style={{fontSize:14,fontWeight:600,color:"#1b1b1e"}}>{label}</span>
-                  </div>
-                  <Toggle on={notifs[k]} onToggle={()=>setNotifs(p=>({...p,[k]:!p[k]}))}/>
-                </div>
-              ))}
-            </div>
-          </div>
-          {/* Danger Zone */}
-          <div style={{background:"rgba(186,26,26,.06)",border:"1px solid rgba(186,26,26,.18)",borderRadius:16,padding:24}}>
-            <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:10,color:"#ba1a1a"}}>
-              <span className="msym" style={{fontSize:20,fontVariationSettings:"'FILL' 1"}}>warning</span>
-              <h3 style={{fontSize:17,fontWeight:700}}>Danger Zone</h3>
-            </div>
-            <p style={{fontSize:13,color:"#44474e",lineHeight:1.65,marginBottom:16}}>Permanently delete your account and all associated escrow history. This action is irreversible.</p>
-            <button style={{width:"100%",background:"#ba1a1a",color:"#fff",border:"none",borderRadius:10,padding:"11px 16px",fontSize:13.5,fontWeight:700,cursor:"pointer",transition:"opacity .15s"}} onMouseEnter={e=>e.currentTarget.style.opacity=".85"} onMouseLeave={e=>e.currentTarget.style.opacity="1"}>Delete Account</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-/* ═══ DASHBOARD ══════════════════════════════════════════════ */
+/* DASHBOARD */
 const Dashboard=({user,onLogout,navigate})=>{
   const [tab,setTab]=useState("transactions");
   const [detail,setDetail]=useState(null);
@@ -1391,10 +1292,12 @@ const Dashboard=({user,onLogout,navigate})=>{
   const [showContract,setShowContract]=useState(null);
   const [showScope,setShowScope]=useState(false);
   const [showAdmin,setShowAdmin]=useState(false);
+  const [drawer,setDrawer]=useState(false);
 
   const hn=k=>e=>setNf(p=>({...p,[k]:e.target.value}));
   const active=txs.filter(t=>!["completed","disputed"].includes(t.status));
   const det=detail?txs.find(t=>t.id===detail.id)||detail:null;
+  const switchTab=k=>{setTab(k);setDetail(null);setDrawer(false);};
 
   const createTx=()=>{
     const cat=CATS.find(c=>c.id===nf.type);
@@ -1404,77 +1307,156 @@ const Dashboard=({user,onLogout,navigate})=>{
 
   if(showAdmin) return <AdminPanel onBack={()=>setShowAdmin(false)}/>;
 
+  const TABS=[["transactions","dashboard","Transactions"],["kyc","badge","KYC"],["disputes","gavel","Disputes"],["settings","manage_accounts","Account"],["history","history","History"]];
+
   return(
-    <div style={{background:"#f5f3f6",minHeight:"100vh",paddingBottom:80}}>
-      {/* TopAppBar — matches team design */}
-      <header style={{background:"#fbf9fc",borderBottom:"1px solid #c5c6cf",position:"sticky",top:0,zIndex:50,display:"flex",alignItems:"center",justifyContent:"space-between",padding:"0 1.5rem",height:64}}>
-        <div style={{display:"flex",alignItems:"center",gap:16}}>
-          {/* Hamburger */}
-          <button style={{background:"none",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",width:36,height:36,borderRadius:"50%",color:"#001637"}} onClick={()=>navigate("home")}>
-            <svg width="20" height="16" viewBox="0 0 20 16" fill="none"><rect y="0" width="20" height="2.2" rx="1.1" fill="currentColor"/><rect y="7" width="20" height="2.2" rx="1.1" fill="currentColor"/><rect y="14" width="20" height="2.2" rx="1.1" fill="currentColor"/></svg>
+    <div style={{background:"#f5f3f6",minHeight:"100dvh",paddingBottom:80}}>
+
+      {/* Overlay */}
+      <div className={"dash-overlay"+(drawer?" show":"")} onClick={()=>setDrawer(false)}/>
+
+      {/* Side Drawer */}
+      <aside className={"dash-drawer"+(drawer?" open":"")}>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"0 16px",height:64,borderBottom:"1px solid #c5c6cf",flexShrink:0}}>
+          <span style={{fontWeight:800,fontSize:20,color:"#001637"}}>Vault<span style={{color:"#006c47"}}>Pay</span></span>
+          <button onClick={()=>setDrawer(false)} style={{background:"none",border:"none",cursor:"pointer",display:"flex",padding:4}}>
+            <span className="msym" style={{fontSize:24,color:"#44474e"}}>close</span>
           </button>
-          <span style={{fontWeight:800,fontSize:22,color:"#001637",letterSpacing:"-.4px",cursor:"pointer"}} onClick={()=>navigate("home")}><span style={{color:"#006c47"}}>Escrow</span></span>
-          {/* Desktop nav tabs */}
-          <div style={{display:"flex",gap:2,marginLeft:8}}>
-            {[["transactions","Transactions"],["kyc","KYC"],["disputes","Disputes"],["settings","Account"],["history","History"]].map(([k,l])=>(
-              <button key={k} onClick={()=>{setTab(k);setDetail(null);}} style={{background:"none",border:"none",cursor:"pointer",padding:"8px 14px",fontSize:13.5,fontWeight:600,color:tab===k?"#001637":"#44474e",borderBottom:tab===k?"2px solid #001637":"2px solid transparent",transition:"all .15s",whiteSpace:"nowrap"}}>{l}</button>
+        </div>
+        <div style={{padding:"14px 16px",borderBottom:"1px solid #e9e7eb",display:"flex",alignItems:"center",gap:12,flexShrink:0}}>
+          <div style={{width:42,height:42,borderRadius:"50%",background:"#001637",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:700,fontSize:16,color:"#fff",flexShrink:0}}>
+            {user?.name?user.name[0].toUpperCase():"U"}
+          </div>
+          <div style={{overflow:"hidden"}}>
+            <div style={{fontWeight:700,fontSize:14,color:"#001637",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{user?.name||"User"}</div>
+            <div style={{fontSize:12,color:"#75777f",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{user?.email||""}</div>
+          </div>
+        </div>
+        <nav style={{flex:1,overflowY:"auto",padding:"10px 8px"}}>
+          {TABS.map(([k,icon,label])=>(
+            <button key={k} onClick={()=>switchTab(k)} style={{width:"100%",display:"flex",alignItems:"center",gap:12,padding:"12px 14px",borderRadius:10,border:"none",cursor:"pointer",background:tab===k?"#001637":"transparent",color:tab===k?"#fff":"#44474e",fontWeight:tab===k?700:500,fontSize:14,marginBottom:2,transition:"all .15s",textAlign:"left"}}>
+              <span className="msym" style={{fontSize:20,color:tab===k?"#fff":"#75777f"}}>{icon}</span>{label}
+            </button>
+          ))}
+        </nav>
+        <div style={{padding:"12px 8px",borderTop:"1px solid #e9e7eb",flexShrink:0,display:"flex",flexDirection:"column",gap:6}}>
+          {user?.email==="admin@vaultpay.com"&&(
+            <button onClick={()=>{setShowAdmin(true);setDrawer(false);}} style={{width:"100%",display:"flex",alignItems:"center",gap:10,padding:"11px 14px",borderRadius:10,border:"1px solid #c5c6cf",background:"transparent",cursor:"pointer",fontSize:13,fontWeight:600,color:"#44474e"}}>
+              <span className="msym" style={{fontSize:18}}>admin_panel_settings</span>Admin Panel
+            </button>
+          )}
+          <button onClick={onLogout} style={{width:"100%",display:"flex",alignItems:"center",gap:10,padding:"11px 14px",borderRadius:10,border:"1px solid #fecaca",background:"transparent",cursor:"pointer",fontSize:13,fontWeight:600,color:"#ba1a1a"}}>
+            <span className="msym" style={{fontSize:18}}>logout</span>Sign Out
+          </button>
+        </div>
+      </aside>
+
+      {/* Top Bar */}
+      <header style={{background:"#fbf9fc",borderBottom:"1px solid #c5c6cf",position:"sticky",top:0,zIndex:50,display:"flex",alignItems:"center",justifyContent:"space-between",padding:"0 14px",height:64,gap:8}}>
+        <div style={{display:"flex",alignItems:"center",gap:8,flex:1,minWidth:0}}>
+          <button className="mob-menu-btn" onClick={()=>setDrawer(v=>!v)} style={{display:"flex",alignItems:"center",justifyContent:"center",width:38,height:38,borderRadius:10,background:"none",border:"none",cursor:"pointer",color:"#001637",flexShrink:0}}>
+            <span className="msym" style={{fontSize:24}}>{drawer?"close":"menu"}</span>
+          </button>
+          <span style={{fontWeight:800,fontSize:20,color:"#001637",letterSpacing:"-.3px",cursor:"pointer",whiteSpace:"nowrap",flexShrink:0}} onClick={()=>navigate("home")}>
+            Vault<span style={{color:"#006c47"}}>Pay</span>
+          </span>
+          <div className="dash-tabs" style={{display:"flex",gap:0,marginLeft:6,overflow:"hidden"}}>
+            {TABS.map(([k,_,l])=>(
+              <button key={k} onClick={()=>switchTab(k)} style={{background:"none",border:"none",cursor:"pointer",padding:"8px 12px",fontSize:13,fontWeight:600,color:tab===k?"#001637":"#44474e",borderBottom:tab===k?"2px solid #001637":"2px solid transparent",transition:"all .15s",whiteSpace:"nowrap"}}>{l}</button>
             ))}
           </div>
         </div>
-        <div style={{display:"flex",alignItems:"center",gap:10}}>
-          {user?.email==="admin@Escrow.com"&&<button onClick={()=>setShowAdmin(true)} style={{background:"none",border:"1px solid #c5c6cf",color:"#44474e",padding:"6px 12px",borderRadius:8,cursor:"pointer",fontSize:12,fontWeight:600}}>Admin Panel</button>}
-          <Btn variant="accent" onClick={()=>setShowNew(true)} style={{fontSize:13,padding:"8px 16px"}}>+ New Transaction</Btn>
-          {/* Avatar + logout */}
-          <div style={{position:"relative"}}>
-            <div style={{width:38,height:38,borderRadius:"50%",background:"#e4e2e5",border:"1.5px solid #c5c6cf",overflow:"hidden",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:700,fontSize:14,color:"#001637"}} onClick={onLogout} title="Log out">
-              {user?.name?user.name[0].toUpperCase():"U"}
-            </div>
+        <div style={{display:"flex",alignItems:"center",gap:8,flexShrink:0}}>
+          {user?.email==="admin@vaultpay.com"&&(
+            <button onClick={()=>setShowAdmin(true)} style={{background:"none",border:"1px solid #c5c6cf",color:"#44474e",padding:"6px 12px",borderRadius:8,cursor:"pointer",fontSize:12,fontWeight:600,whiteSpace:"nowrap",display:"none"}} className="dash-admin-desk">Admin</button>
+          )}
+          <button onClick={()=>setShowNew(true)} style={{display:"inline-flex",alignItems:"center",gap:6,background:"#006c47",color:"#fff",border:"none",borderRadius:9,cursor:"pointer",fontWeight:700,fontSize:13,padding:"9px 13px",whiteSpace:"nowrap"}}>
+            <span className="msym" style={{fontSize:18}}>add</span>
+            <span style={{display:"none"}} id="new-lbl">New Transaction</span>
+            <style>{`@media(min-width:480px){#new-lbl{display:inline!important;}}`}</style>
+          </button>
+          <div style={{width:36,height:36,borderRadius:"50%",background:"#001637",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:700,fontSize:14,color:"#fff",cursor:"pointer",flexShrink:0}} onClick={()=>setDrawer(v=>!v)}>
+            {user?.name?user.name[0].toUpperCase():"U"}
           </div>
         </div>
       </header>
 
-      {/* Background decoration */}
-      <div style={{position:"fixed",top:0,left:0,width:"100%",height:"100%",zIndex:-1,pointerEvents:"none",overflow:"hidden"}}>
-        <div style={{position:"absolute",top:"-10%",right:"-5%",width:400,height:400,background:"rgba(0,22,55,.04)",borderRadius:"50%",filter:"blur(100px)"}}/>
-        <div style={{position:"absolute",bottom:"-10%",left:"-5%",width:300,height:300,background:"rgba(0,108,71,.04)",borderRadius:"50%",filter:"blur(80px)"}}/>
-      </div>
+      {/* Page content */}
+      <div style={{maxWidth:1200,margin:"0 auto",padding:"18px 14px 90px"}}>
 
-      <div style={{maxWidth:1200,margin:"0 auto",padding:"26px 1.5rem"}}>
-        <div className="g4" style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:16,marginBottom:26}}>
-          {[{l:"Active",v:active.length,i:"bolt",c:"#3b82f6"},{l:"In Escrow",v:`$${active.reduce((a,b)=>a+b.amount,0).toLocaleString()}`,i:"lock",c:T.green},{l:"Completed",v:txs.filter(t=>t.status==="completed").length,i:"check_circle",c:T.teal},{l:"Disputed",v:txs.filter(t=>t.status==="disputed").length,i:"gavel",c:T.accent}].map(c=>(
-            <div key={c.l} style={{background:T.white,border:`1px solid ${T.gray100}`,borderRadius:14,padding:"17px 19px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-              <div><div style={{fontSize:11,fontWeight:700,color:T.gray400,textTransform:"uppercase",letterSpacing:".06em",marginBottom:5}}>{c.l}</div><div style={{fontSize:24,fontWeight:800,color:T.primary,fontFamily:"'Inter',sans-serif"}}>{c.v}</div></div>
-              <div style={{width:42,height:42,background:c.c+"18",borderRadius:11,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18}}><span className="msym" style={{fontSize:20,color:c.c||T.primary}}>{c.i}</span></div>
+        {/* KPI row */}
+        <div className="dash-kpi" style={{marginBottom:18}}>
+          {[
+            {l:"Active",    v:active.length,                                               i:"bolt",         c:"#3b82f6"},
+            {l:"In Escrow", v:"$"+active.reduce((a,b)=>a+b.amount,0).toLocaleString(),    i:"lock",         c:T.green},
+            {l:"Completed", v:txs.filter(t=>t.status==="completed").length,                i:"check_circle", c:T.teal},
+            {l:"Disputed",  v:txs.filter(t=>t.status==="disputed").length,                 i:"gavel",        c:T.red},
+          ].map(c=>(
+            <div key={c.l} style={{background:T.white,border:"1px solid "+T.gray100,borderRadius:12,padding:"14px 16px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+              <div>
+                <div style={{fontSize:10.5,fontWeight:700,color:T.gray400,textTransform:"uppercase",letterSpacing:".06em",marginBottom:4}}>{c.l}</div>
+                <div style={{fontSize:22,fontWeight:800,color:T.primary}}>{c.v}</div>
+              </div>
+              <div style={{width:40,height:40,background:c.c+"18",borderRadius:10,display:"flex",alignItems:"center",justifyContent:"center"}}>
+                <span className="msym" style={{fontSize:20,color:c.c}}>{c.i}</span>
+              </div>
             </div>
           ))}
         </div>
 
-        {/* TRANSACTIONS TAB */}
+        {/* TRANSACTIONS LIST */}
         {tab==="transactions"&&!det&&(
-          <div style={{background:T.white,border:`1px solid ${T.gray100}`,borderRadius:16,overflow:"hidden"}}>
-            <div style={{padding:"16px 22px",display:"flex",justifyContent:"space-between",alignItems:"center",borderBottom:`1px solid ${T.gray100}`,flexWrap:"wrap",gap:10}}>
+          <div style={{background:T.white,border:"1px solid "+T.gray100,borderRadius:14,overflow:"hidden"}}>
+            <div style={{padding:"14px 16px",display:"flex",justifyContent:"space-between",alignItems:"center",borderBottom:"1px solid "+T.gray100,flexWrap:"wrap",gap:10}}>
               <div style={{fontWeight:700,fontSize:15,color:T.primary}}>All Transactions</div>
-              <div style={{display:"flex",gap:8}}>{["All","Active","Completed","Disputed"].map(f=><button key={f} style={{fontSize:12.5,padding:"5px 12px",borderRadius:7,border:`1px solid ${T.gray100}`,background:f==="All"?T.primary:T.white,color:f==="All"?T.white:T.gray600,cursor:"pointer"}}>{f}</button>)}</div>
+              <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
+                {["All","Active","Completed","Disputed"].map(f=>(
+                  <button key={f} style={{fontSize:12,padding:"5px 10px",borderRadius:7,border:"1px solid "+T.gray100,background:f==="All"?T.primary:T.white,color:f==="All"?T.white:T.gray600,cursor:"pointer"}}>{f}</button>
+                ))}
+              </div>
             </div>
-            <div style={{overflowX:"auto"}}>
-              <table style={{width:"100%",borderCollapse:"collapse",minWidth:680}}>
-                <thead><tr style={{background:T.offWhite}}>{["Project","Category","Value","Role","Counterparty","Milestones","Status","Date",""].map(h=><th key={h} style={{padding:"10px 14px",textAlign:"left",fontSize:10.5,fontWeight:700,color:T.gray500,textTransform:"uppercase",letterSpacing:".06em",borderBottom:`1px solid ${T.gray100}`}}>{h}</th>)}</tr></thead>
+            {/* Desktop table */}
+            <div className="tx-tbl" style={{overflowX:"auto"}}>
+              <table style={{width:"100%",borderCollapse:"collapse",minWidth:580}}>
+                <thead>
+                  <tr style={{background:T.offWhite}}>
+                    {["Project","Value","Role","Status","Date",""].map(h=>(
+                      <th key={h} style={{padding:"10px 14px",textAlign:"left",fontSize:10.5,fontWeight:700,color:T.gray500,textTransform:"uppercase",letterSpacing:".06em",borderBottom:"1px solid "+T.gray100,whiteSpace:"nowrap"}}>{h}</th>
+                    ))}
+                  </tr>
+                </thead>
                 <tbody>
                   {txs.map((tx,i)=>(
-                    <tr key={tx.id} className="tr" style={{borderBottom:i<txs.length-1?`1px solid ${T.gray100}`:"none",cursor:"pointer"}} onClick={()=>setDetail(tx)}>
-                      <td style={{padding:"13px 14px"}}><div style={{fontWeight:600,fontSize:13.5,color:T.primary}}>{tx.title}</div><div style={{fontSize:11,color:T.gray400,marginTop:2}}>{tx.id}</div></td>
-                      <td style={{padding:"13px 14px"}}><span style={{fontSize:11,fontWeight:700,color:T.teal,background:T.tealLt,padding:"3px 8px",borderRadius:5}}>{tx.type}</span></td>
-                      <td style={{padding:"13px 14px",fontWeight:700,color:T.primary,fontFamily:"'Inter',sans-serif"}}>${tx.amount.toLocaleString()}</td>
-                      <td style={{padding:"13px 14px"}}><span style={{fontSize:11,fontWeight:700,color:tx.role==="Buyer"?"#3b82f6":"#10b981",background:tx.role==="Buyer"?"#eff6ff":"#f0fdf4",padding:"3px 8px",borderRadius:5}}>{tx.role}</span></td>
-                      <td style={{padding:"13px 14px",fontSize:13,color:T.gray700}}>{tx.other}</td>
-                      <td style={{padding:"13px 14px",fontSize:13,color:T.gray500,textAlign:"center"}}>{tx.milestones}</td>
-                      <td style={{padding:"13px 14px"}}><SB status={tx.status}/></td>
-                      <td style={{padding:"13px 14px",fontSize:12,color:T.gray400}}>{tx.date}</td>
-                      <td style={{padding:"13px 14px"}}><span style={{color:T.accent,fontSize:13,fontWeight:700}}>View →</span></td>
+                    <tr key={tx.id} className="tr" style={{borderBottom:i<txs.length-1?"1px solid "+T.gray100:"none",cursor:"pointer"}} onClick={()=>setDetail(tx)}>
+                      <td style={{padding:"12px 14px"}}>
+                        <div style={{fontWeight:600,fontSize:13.5,color:T.primary,marginBottom:2}}>{tx.title}</div>
+                        <div style={{fontSize:11,color:T.gray400}}>{tx.id} &bull; {tx.type}</div>
+                      </td>
+                      <td style={{padding:"12px 14px",fontWeight:700,color:T.primary,whiteSpace:"nowrap"}}>${tx.amount.toLocaleString()}</td>
+                      <td style={{padding:"12px 14px"}}><span style={{fontSize:11,fontWeight:700,color:tx.role==="Buyer"?"#3b82f6":"#006c47",background:tx.role==="Buyer"?"#eff6ff":"#e8f5ee",padding:"3px 8px",borderRadius:5}}>{tx.role}</span></td>
+                      <td style={{padding:"12px 14px"}}><SB status={tx.status}/></td>
+                      <td style={{padding:"12px 14px",fontSize:12,color:T.gray400,whiteSpace:"nowrap"}}>{tx.date}</td>
+                      <td style={{padding:"12px 14px"}}><span style={{color:T.accent,fontSize:13,fontWeight:700}}>View</span></td>
                     </tr>
                   ))}
                 </tbody>
               </table>
+            </div>
+            {/* Mobile cards */}
+            <div className="tx-mob" style={{display:"none",flexDirection:"column"}}>
+              {txs.map((tx,i)=>(
+                <div key={tx.id} onClick={()=>setDetail(tx)} style={{padding:"14px 16px",cursor:"pointer",borderBottom:i<txs.length-1?"1px solid "+T.gray100:"none",display:"flex",alignItems:"center",gap:12}}>
+                  <div style={{flex:1,minWidth:0}}>
+                    <div style={{fontWeight:700,fontSize:14,color:T.primary,marginBottom:4,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{tx.title}</div>
+                    <div style={{display:"flex",alignItems:"center",gap:8,flexWrap:"wrap",marginBottom:3}}>
+                      <span style={{fontSize:13.5,fontWeight:700,color:T.primary}}>${tx.amount.toLocaleString()}</span>
+                      <SB status={tx.status}/>
+                    </div>
+                    <div style={{fontSize:11.5,color:T.gray400}}>{tx.id} &bull; {tx.date}</div>
+                  </div>
+                  <span className="msym" style={{fontSize:22,color:T.gray400,flexShrink:0}}>chevron_right</span>
+                </div>
+              ))}
             </div>
           </div>
         )}
@@ -1482,82 +1464,88 @@ const Dashboard=({user,onLogout,navigate})=>{
         {/* TRANSACTION DETAIL */}
         {tab==="transactions"&&det&&(
           <div>
-            <button onClick={()=>setDetail(null)} style={{background:"none",border:"none",color:T.gray500,cursor:"pointer",fontSize:13.5,marginBottom:18}}>← Back to transactions</button>
-            <div className="dg" style={{display:"grid",gridTemplateColumns:"1fr 320px",gap:20}}>
-              <div style={{background:T.white,border:`1px solid ${T.gray100}`,borderRadius:16,overflow:"hidden"}}>
-                <div style={{background:`linear-gradient(135deg,${T.primary},${T.primaryDk})`,padding:"22px 26px",color:T.white}}>
-                  <div style={{fontSize:12,color:"rgba(255,255,255,.5)",marginBottom:5}}>{det.id} · {det.type} · {det.milestones} milestone{det.milestones>1?"s":""}</div>
-                  <div style={{fontFamily:"'Inter',sans-serif",fontSize:20,fontWeight:700}}>{det.title}</div>
-                  <div style={{display:"flex",alignItems:"center",gap:14,marginTop:10,flexWrap:"wrap"}}>
-                    <span style={{fontSize:26,fontWeight:800}}>${det.amount?.toLocaleString()} {det.currency}</span>
+            <button onClick={()=>setDetail(null)} style={{background:"none",border:"none",color:T.gray500,cursor:"pointer",fontSize:14,marginBottom:14,display:"flex",alignItems:"center",gap:6,padding:0}}>
+              <span className="msym" style={{fontSize:18}}>arrow_back</span>Back to transactions
+            </button>
+            <div className="dg" style={{display:"grid",gridTemplateColumns:"1fr 300px",gap:16,alignItems:"start"}}>
+              {/* Left */}
+              <div style={{background:T.white,border:"1px solid "+T.gray100,borderRadius:14,overflow:"hidden"}}>
+                <div style={{background:"linear-gradient(135deg,"+T.primary+","+T.primaryDk+")",padding:"20px",color:T.white}}>
+                  <div style={{fontSize:11,color:"rgba(255,255,255,.5)",marginBottom:4}}>{det.id} &bull; {det.type} &bull; {det.milestones} milestone{det.milestones>1?"s":""}</div>
+                  <div style={{fontWeight:700,fontSize:"clamp(15px,3vw,19px)",lineHeight:1.3}}>{det.title}</div>
+                  <div style={{display:"flex",alignItems:"center",gap:12,marginTop:10,flexWrap:"wrap"}}>
+                    <span style={{fontSize:"clamp(18px,4vw,24px)",fontWeight:800}}>${det.amount?.toLocaleString()} {det.currency}</span>
                     <SB status={det.status}/>
                   </div>
                 </div>
-                <div style={{padding:"24px"}}>
-                  <div style={{fontWeight:700,fontSize:13.5,color:T.primary,marginBottom:16}}>Escrow Workflow Timeline</div>
+                <div style={{padding:"18px 16px"}}>
+                  <div style={{fontWeight:700,fontSize:12.5,color:T.primary,marginBottom:14,textTransform:"uppercase",letterSpacing:".06em"}}>Escrow Timeline</div>
                   {["Project created","Contract generated","Escrow funded","Provider working","Deliverable submitted","AI audit completed","Client review","Payment released"].map((s,i,a)=>(
-                    <div key={i} style={{display:"flex",gap:12,marginBottom:i<a.length-1?14:0}}>
+                    <div key={i} style={{display:"flex",gap:10,marginBottom:i<a.length-1?12:0}}>
                       <div style={{display:"flex",flexDirection:"column",alignItems:"center",flexShrink:0}}>
-                        <div style={{width:24,height:24,borderRadius:"50%",background:i<3?T.primary:T.gray100,border:`2px solid ${i<3?T.primary:"#e2e8f0"}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:10,fontWeight:700,color:i<3?T.white:T.gray400}}>{i<3?"✓":i+1}</div>
-                        {i<a.length-1&&<div style={{width:2,flex:1,minHeight:12,background:i<2?T.primary+"30":T.gray100,marginTop:2}}/>}
+                        <div style={{width:22,height:22,borderRadius:"50%",background:i<3?T.primary:T.gray100,display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,fontWeight:700,color:i<3?T.white:T.gray400}}>
+                          {i<3?<span className="msym" style={{fontSize:11}}>check</span>:i+1}
+                        </div>
+                        {i<a.length-1&&<div style={{width:2,flex:1,minHeight:10,background:i<2?T.primary+"30":T.gray100,marginTop:2}}/>}
                       </div>
                       <div style={{paddingTop:2,fontSize:13,color:i<3?T.primary:T.gray400,fontWeight:i<3?600:400}}>{s}</div>
                     </div>
                   ))}
-                  <hr style={{border:"none",borderTop:`1px solid ${T.gray100}`,margin:"20px 0"}}/>
-                  <div style={{fontWeight:700,fontSize:13.5,color:T.primary,marginBottom:13}}>Messages</div>
-                  <div style={{maxHeight:240,overflowY:"auto",display:"flex",flexDirection:"column",gap:10,marginBottom:12}}>
+                  <hr style={{border:"none",borderTop:"1px solid "+T.gray100,margin:"18px 0"}}/>
+                  <div style={{fontWeight:700,fontSize:12.5,color:T.primary,marginBottom:12,textTransform:"uppercase",letterSpacing:".06em"}}>Messages</div>
+                  <div style={{maxHeight:220,overflowY:"auto",display:"flex",flexDirection:"column",gap:10,marginBottom:12}}>
                     {msgs.map((m,i)=>(
                       <div key={i} style={{display:"flex",gap:8,flexDirection:m.from==="You"?"row-reverse":"row"}}>
                         <div style={{width:28,height:28,borderRadius:"50%",background:m.from==="You"?T.accent:T.primary,display:"flex",alignItems:"center",justifyContent:"center",color:T.white,fontSize:10,fontWeight:700,flexShrink:0}}>{m.from[0]}</div>
-                        <div style={{maxWidth:"70%"}}>
-                          <div style={{fontSize:10.5,color:T.gray400,marginBottom:2,textAlign:m.from==="You"?"right":"left"}}>{m.from} · {m.time}</div>
+                        <div style={{maxWidth:"72%"}}>
+                          <div style={{fontSize:10,color:T.gray400,marginBottom:2,textAlign:m.from==="You"?"right":"left"}}>{m.from} &bull; {m.time}</div>
                           <div style={{background:m.from==="You"?T.primary:T.offWhite,color:m.from==="You"?T.white:T.gray900,borderRadius:9,padding:"8px 12px",fontSize:13,lineHeight:1.5}}>{m.text}</div>
                         </div>
                       </div>
                     ))}
                   </div>
                   <div style={{display:"flex",gap:8}}>
-                    <input style={{flex:1,padding:"9px 12px",border:`1.5px solid ${T.gray100}`,borderRadius:8,fontSize:13.5,outline:"none"}} placeholder="Type a message…" value={msg} onChange={e=>setMsg(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"&&msg.trim()){setMsgs(p=>[...p,{from:"You",text:msg,time:new Date().toLocaleTimeString("en",{hour:"numeric",minute:"2-digit"})}]);setMsg("");}}}/>
-                    <Btn variant="primary" style={{padding:"9px 16px"}} onClick={()=>{if(msg.trim()){setMsgs(p=>[...p,{from:"You",text:msg,time:new Date().toLocaleTimeString("en",{hour:"numeric",minute:"2-digit"})}]);setMsg("");;}}}>Send</Btn>
+                    <input style={{flex:1,padding:"9px 12px",border:"1.5px solid "+T.gray100,borderRadius:8,fontSize:13.5,outline:"none",minWidth:0}} placeholder="Type a message..." value={msg} onChange={e=>setMsg(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"&&msg.trim()){setMsgs(p=>[...p,{from:"You",text:msg,time:new Date().toLocaleTimeString("en",{hour:"numeric",minute:"2-digit"})}]);setMsg("");}}}/>
+                    <Btn variant="primary" style={{padding:"9px 14px",flexShrink:0}} onClick={()=>{if(msg.trim()){setMsgs(p=>[...p,{from:"You",text:msg,time:new Date().toLocaleTimeString("en",{hour:"numeric",minute:"2-digit"})}]);setMsg("");}}}>
+                      <span className="msym" style={{fontSize:18}}>send</span>
+                    </Btn>
                   </div>
                 </div>
               </div>
-              {/* Right panel */}
+              {/* Right sidebar */}
               <div style={{display:"flex",flexDirection:"column",gap:14}}>
-                <div style={{background:T.white,border:`1px solid ${T.gray100}`,borderRadius:14,padding:"18px"}}>
-                  <div style={{fontWeight:700,fontSize:13.5,color:T.primary,marginBottom:13}}>Actions</div>
+                <div style={{background:T.white,border:"1px solid "+T.gray100,borderRadius:14,padding:"16px"}}>
+                  <div style={{fontWeight:700,fontSize:12.5,color:T.primary,marginBottom:12,textTransform:"uppercase",letterSpacing:".06em"}}>Actions</div>
                   <div style={{display:"flex",flexDirection:"column",gap:8}}>
-                    <Btn variant="purple" style={{width:"100%",fontSize:13}} onClick={()=>setShowContract(det)}><span className="msym" style={{fontSize:16}}>description</span>View AI Contract</Btn>
-                    {det.status==="inspection"&&det.role==="Buyer"&&(<>
-                      <Btn variant="teal" style={{width:"100%",fontSize:13}} onClick={()=>setShowAudit(det)}><span className="msym" style={{fontSize:16}}>smart_toy</span>Run AI Audit</Btn>
-                      <Btn variant="green" style={{width:"100%",fontSize:13}} onClick={()=>setTxs(p=>p.map(t=>t.id===det.id?{...t,status:"approved"}:t))}><span className="msym" style={{fontSize:16}}>check_circle</span>Approve & Release Funds</Btn>
-                      <Btn variant="red" style={{width:"100%",fontSize:13}} onClick={()=>setShowDispute(det)}><span className="msym" style={{fontSize:16}}>gavel</span>Raise Dispute</Btn>
-                    </>)}
-                    {det.status==="funded"&&det.role==="Seller"&&<div style={{background:T.tealLt,border:`1px solid #99f6e4`,borderRadius:8,padding:"11px 13px",fontSize:12.5,color:"#0f766e"}}>Funds confirmed. Proceed and submit when complete.</div>}
-                    {det.status==="approved"&&<div style={{background:T.greenLt,border:`1px solid #a7f3d0`,borderRadius:8,padding:"11px 13px",fontSize:12.5,color:"#065f46"}}><span className="msym" style={{fontSize:14,verticalAlign:"middle",marginRight:6}}>check_circle</span>Approved. Payment releases within 1 business day.</div>}
-                    {det.status==="completed"&&<div style={{background:T.offWhite,borderRadius:8,padding:"11px 13px",fontSize:12.5,color:T.gray500}}>Transaction complete. Funds released.</div>}
-                    {det.status==="disputed"&&<div style={{background:"#fef2f2",border:`1px solid #fecaca`,borderRadius:8,padding:"11px 13px",fontSize:12.5,color:T.red}}><span className="msym" style={{fontSize:14,verticalAlign:"middle",marginRight:6}}>warning</span>Dispute in review. Our team will contact both parties within 24h.</div>}
-                    {det.status==="pending"&&<div style={{background:T.purpleLt,border:`1px solid #ddd6fe`,borderRadius:8,padding:"11px 13px",fontSize:12.5,color:T.purple}}>Awaiting client payment into escrow.</div>}
-                    {det.status==="revision"&&<div style={{background:"#fff7ed",border:`1px solid #fed7aa`,borderRadius:8,padding:"11px 13px",fontSize:12.5,color:"#c2410c"}}><span className="msym" style={{fontSize:14,verticalAlign:"middle",marginRight:6}}>refresh</span>Revision requested. Provider notified.</div>}
+                    <Btn variant="purple" style={{width:"100%",fontSize:13,justifyContent:"flex-start"}} onClick={()=>setShowContract(det)}>
+                      <span className="msym" style={{fontSize:16}}>description</span>View AI Contract
+                    </Btn>
+                    <Btn variant="teal" style={{width:"100%",fontSize:13,justifyContent:"flex-start"}} onClick={()=>setShowAudit(det)}>
+                      <span className="msym" style={{fontSize:16}}>smart_toy</span>Run AI Audit
+                    </Btn>
+                    {(det.status==="inspection"||det.status==="funded")&&det.role==="Buyer"&&(
+                      <Btn variant="green" style={{width:"100%",fontSize:13,justifyContent:"flex-start"}} onClick={()=>setTxs(p=>p.map(t=>t.id===det.id?{...t,status:"approved"}:t))}>
+                        <span className="msym" style={{fontSize:16}}>check_circle</span>Approve &amp; Release
+                      </Btn>
+                    )}
+                    <Btn variant="red" style={{width:"100%",fontSize:13,justifyContent:"flex-start"}} onClick={()=>setShowDispute(det)}>
+                      <span className="msym" style={{fontSize:16}}>gavel</span>Raise Dispute
+                    </Btn>
                   </div>
+                  {det.status==="approved"&&<div style={{background:T.greenLt,borderRadius:8,padding:"10px 12px",fontSize:12.5,color:"#065f46",marginTop:10,display:"flex",alignItems:"center",gap:6}}><span className="msym" style={{fontSize:14}}>check_circle</span>Payment releases within 1 business day.</div>}
+                  {det.status==="disputed"&&<div style={{background:"#fef2f2",border:"1px solid #fecaca",borderRadius:8,padding:"10px 12px",fontSize:12.5,color:T.red,marginTop:10,display:"flex",alignItems:"center",gap:6}}><span className="msym" style={{fontSize:14}}>warning</span>Dispute in review.</div>}
+                  {det.status==="revision"&&<div style={{background:"#fff7ed",border:"1px solid #fed7aa",borderRadius:8,padding:"10px 12px",fontSize:12.5,color:"#c2410c",marginTop:10,display:"flex",alignItems:"center",gap:6}}><span className="msym" style={{fontSize:14}}>refresh</span>Revision requested.</div>}
                 </div>
-                <div style={{background:T.white,border:`1px solid ${T.gray100}`,borderRadius:14,padding:"18px"}}>
-                  <div style={{fontWeight:700,fontSize:13.5,color:T.primary,marginBottom:13}}>Financial Summary</div>
-                  {[["Project value",`$${det.amount?.toLocaleString()} ${det.currency}`],["Escrow fee (est.)",`$${Math.round(det.amount*.0265).toLocaleString()}`],["Milestones",`${det.milestones}`],["Fee payer",det.role]].map(([k,v])=>(
-                    <div key={k} style={{display:"flex",justifyContent:"space-between",padding:"8px 0",borderBottom:`1px solid ${T.gray100}`,fontSize:13}}>
+                <div style={{background:T.white,border:"1px solid "+T.gray100,borderRadius:14,padding:"16px"}}>
+                  <div style={{fontWeight:700,fontSize:12.5,color:T.primary,marginBottom:12,textTransform:"uppercase",letterSpacing:".06em"}}>Financial Summary</div>
+                  {[["Project Value",det.currency+" "+det.amount?.toLocaleString()],["Escrow Fee (3.25%)",det.currency+" "+Math.round(det.amount*.0325).toLocaleString()],["Provider Receives",det.currency+" "+Math.round(det.amount*.9675).toLocaleString()]].map(([k,v])=>(
+                    <div key={k} style={{display:"flex",justifyContent:"space-between",padding:"8px 0",borderBottom:"1px solid "+T.gray100,fontSize:13}}>
                       <span style={{color:T.gray500}}>{k}</span><span style={{fontWeight:600,color:T.primary}}>{v}</span>
                     </div>
                   ))}
-                  <div style={{display:"flex",justifyContent:"space-between",paddingTop:11,fontSize:14,fontWeight:800,color:T.primary}}>
-                    <span>{det.role==="Buyer"?"You pay":"You receive"}</span>
-                    <span style={{color:T.accent}}>${(det.role==="Buyer"?det.amount*1.0265:det.amount*0.9735).toLocaleString("en",{minimumFractionDigits:2,maximumFractionDigits:2})}</span>
+                  <div style={{display:"flex",justifyContent:"space-between",paddingTop:10,fontSize:14,fontWeight:800,color:T.primary}}>
+                    <span>Total Protected</span><span>{det.currency} {det.amount?.toLocaleString()}</span>
                   </div>
-                </div>
-                <div style={{background:`linear-gradient(135deg,${T.tealLt},#f0fdf4)`,border:`1px solid #99f6e4`,borderRadius:14,padding:"16px"}}>
-                  <div style={{fontSize:20,marginBottom:7}}>lock</div>
-                  <div style={{fontWeight:700,fontSize:13,color:T.primary,marginBottom:4}}>Protected by Escrow</div>
-                  <div style={{fontSize:12,color:"#0f766e",lineHeight:1.7}}>AI-audited delivery · Regulated trust account · 256-bit SSL · Dispute protection</div>
                 </div>
               </div>
             </div>
@@ -1566,24 +1554,37 @@ const Dashboard=({user,onLogout,navigate})=>{
 
         {/* KYC TAB */}
         {tab==="kyc"&&(
-          <div style={{background:T.white,border:`1px solid ${T.gray100}`,borderRadius:16,padding:"clamp(20px,4vw,32px)"}}>
-            <h2 style={{fontFamily:"'Inter',sans-serif",fontSize:22,color:T.primary,marginBottom:6}}>Identity & Business Verification</h2>
-            <p style={{color:T.gray500,fontSize:13.5,marginBottom:24}}>Complete verification to unlock higher transaction limits and build trust with counterparties.</p>
-            <div className="g2" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16,marginBottom:28}}>
-              {[{icon:"mail",title:"Email Verification",done:true,desc:"Required for all accounts."},{icon:"smartphone",title:"Phone Verification",done:false,desc:"Add and verify your phone number."},{icon:"badge",title:"Identity Verification",done:kycDone,desc:"Government ID (Passport, Licence, NIN)."},{icon:"business",title:"Business Verification",done:false,desc:"Company registration documents."},{icon:"workspace_premium",title:"Premium Manual Verification",done:false,desc:"For enterprise & high-value accounts."}].map(v=>(
-                <div key={v.title} style={{border:`1.5px solid ${v.done?T.green:T.gray100}`,borderRadius:12,padding:"17px 18px",display:"flex",gap:13,alignItems:"flex-start"}}>
-                  <div style={{fontSize:22,flexShrink:0}}>{v.icon}</div>
-                  <div style={{flex:1}}><div style={{fontWeight:700,fontSize:13.5,color:T.primary,marginBottom:3}}>{v.title}</div><div style={{fontSize:12,color:T.gray500,marginBottom:9}}>{v.desc}</div>{v.done?<span style={{fontSize:11.5,fontWeight:700,color:T.green,background:T.greenLt,padding:"3px 10px",borderRadius:20}}>check_circle Verified</span>:<Btn variant="outline" style={{fontSize:12,padding:"6px 14px"}} onClick={()=>setShowKYC(true)}>Verify Now</Btn>}</div>
+          <div style={{background:T.white,border:"1px solid "+T.gray100,borderRadius:14,padding:"clamp(16px,4vw,28px)"}}>
+            <h2 style={{fontSize:"clamp(18px,3vw,22px)",fontWeight:700,color:T.primary,marginBottom:6}}>Identity &amp; Business Verification</h2>
+            <p style={{color:T.gray500,fontSize:13.5,marginBottom:22}}>Complete verification to unlock higher transaction limits and build trust with counterparties.</p>
+            <div className="g2-dash" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14,marginBottom:22}}>
+              {[
+                {icon:"mail",             title:"Email Verification",           done:true,    desc:"Required for all accounts."},
+                {icon:"smartphone",       title:"Phone Verification",           done:false,   desc:"Add and verify your phone number."},
+                {icon:"badge",            title:"Identity Verification",        done:kycDone, desc:"Government ID (Passport, Licence, NIN)."},
+                {icon:"business",         title:"Business Verification",        done:false,   desc:"Company registration documents."},
+                {icon:"workspace_premium",title:"Premium Manual Verification",  done:false,   desc:"For enterprise and high-value accounts."},
+              ].map(v=>(
+                <div key={v.title} style={{border:"1.5px solid "+(v.done?T.green:T.gray100),borderRadius:12,padding:"15px",display:"flex",gap:12,alignItems:"flex-start"}}>
+                  <span className="msym" style={{fontSize:22,color:v.done?T.green:T.gray400,flexShrink:0,marginTop:1}}>{v.icon}</span>
+                  <div style={{flex:1,minWidth:0}}>
+                    <div style={{fontWeight:700,fontSize:13.5,color:T.primary,marginBottom:3}}>{v.title}</div>
+                    <div style={{fontSize:12,color:T.gray500,marginBottom:9}}>{v.desc}</div>
+                    {v.done
+                      ?<span style={{fontSize:11.5,fontWeight:700,color:T.green,background:T.greenLt,padding:"3px 10px",borderRadius:20,display:"inline-flex",alignItems:"center",gap:4}}><span className="msym" style={{fontSize:13}}>check_circle</span>Verified</span>
+                      :<Btn variant="outline" style={{fontSize:12,padding:"6px 12px"}} onClick={()=>setShowKYC(true)}>Verify Now</Btn>
+                    }
+                  </div>
                 </div>
               ))}
             </div>
-            <div style={{background:T.offWhite,borderRadius:12,padding:"18px 20px"}}>
-              <div style={{fontWeight:700,fontSize:13.5,color:T.primary,marginBottom:10}}>Verification Limits</div>
-              <div className="g3" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>
-                {[["Basic (Email)","Up to $500"],["Verified (ID)","Up to $50,000"],["Full KYC (Business)","Unlimited"]].map(([l,v])=>(
-                  <div key={l} style={{background:T.white,border:`1px solid ${T.gray100}`,borderRadius:9,padding:"12px 14px",textAlign:"center"}}>
-                    <div style={{fontWeight:600,fontSize:12.5,color:T.gray700,marginBottom:4}}>{l}</div>
-                    <div style={{fontFamily:"'Inter',sans-serif",fontSize:18,fontWeight:800,color:T.accent}}>{v}</div>
+            <div style={{background:T.offWhite,borderRadius:12,padding:"16px 18px"}}>
+              <div style={{fontWeight:700,fontSize:13,color:T.primary,marginBottom:10}}>Verification Limits</div>
+              <div className="g3-dash" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:10}}>
+                {[["Basic (Email)","Up to $500"],["Verified (ID)","Up to $50,000"],["Full KYC","Unlimited"]].map(([l,v])=>(
+                  <div key={l} style={{background:T.white,border:"1px solid "+T.gray100,borderRadius:9,padding:"12px",textAlign:"center"}}>
+                    <div style={{fontWeight:600,fontSize:12,color:T.gray700,marginBottom:4}}>{l}</div>
+                    <div style={{fontSize:16,fontWeight:800,color:T.accent}}>{v}</div>
                   </div>
                 ))}
               </div>
@@ -1591,71 +1592,114 @@ const Dashboard=({user,onLogout,navigate})=>{
           </div>
         )}
 
-        {/* DISPUTE CENTER TAB */}
+        {/* DISPUTES TAB */}
         {tab==="disputes"&&(
-          <div style={{background:T.white,border:`1px solid ${T.gray100}`,borderRadius:16,padding:"clamp(20px,4vw,32px)"}}>
-            <h2 style={{fontFamily:"'Inter',sans-serif",fontSize:22,color:T.primary,marginBottom:6}}>Dispute Center</h2>
-            <p style={{color:T.gray500,fontSize:13.5,marginBottom:22}}>AI-assisted dispute resolution with human arbitration. Fair, fast, and binding.</p>
-            <div className="g3" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:14,marginBottom:28}}>
-              {[{icon:"smart_toy",title:"AI Case Analysis",desc:"Timeline reconstruction and evidence analysis — generated automatically on filing."},{icon:"attach_file",title:"Evidence Uploads",desc:"Upload screenshots, contracts, code links, and chat exports to support your case."},{icon:"gavel",title:"Admin Arbitration",desc:"A Dispute Resolution Officer issues a binding decision within 5 business days."}].map(d=>(
-                <div key={d.title} style={{background:T.offWhite,borderRadius:12,padding:"18px",textAlign:"center"}}><div style={{fontSize:28,marginBottom:10}}>{d.icon}</div><div style={{fontWeight:700,fontSize:13.5,color:T.primary,marginBottom:6}}>{d.title}</div><p style={{fontSize:12.5,color:T.gray500,lineHeight:1.7}}>{d.desc}</p></div>
+          <div style={{background:T.white,border:"1px solid "+T.gray100,borderRadius:14,padding:"clamp(16px,4vw,28px)"}}>
+            <h2 style={{fontSize:"clamp(18px,3vw,22px)",fontWeight:700,color:T.primary,marginBottom:6}}>Dispute Center</h2>
+            <p style={{color:T.gray500,fontSize:13.5,marginBottom:20}}>AI-assisted dispute resolution with human arbitration. Fair, fast, and binding.</p>
+            <div className="g3-dash" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12,marginBottom:22}}>
+              {[
+                {icon:"smart_toy",   title:"AI Case Analysis",  desc:"Timeline reconstruction and evidence analysis generated automatically on filing."},
+                {icon:"attach_file", title:"Evidence Uploads",  desc:"Upload screenshots, contracts, code links, and chat exports to support your case."},
+                {icon:"gavel",       title:"Admin Arbitration", desc:"A Dispute Resolution Officer issues a binding decision within 5 business days."},
+              ].map(d=>(
+                <div key={d.title} style={{background:T.offWhite,borderRadius:12,padding:"16px",textAlign:"center"}}>
+                  <span className="msym" style={{fontSize:28,color:T.primary,display:"block",marginBottom:10}}>{d.icon}</span>
+                  <div style={{fontWeight:700,fontSize:13,color:T.primary,marginBottom:6}}>{d.title}</div>
+                  <p style={{fontSize:12.5,color:T.gray500,lineHeight:1.7}}>{d.desc}</p>
+                </div>
               ))}
             </div>
-            <div style={{fontWeight:700,fontSize:14,color:T.primary,marginBottom:13}}>Active Disputes</div>
-            {txs.filter(t=>t.status==="disputed").length===0?(
-              <div style={{textAlign:"center",padding:"36px",color:T.gray400,fontSize:14}}><div style={{fontSize:36,marginBottom:10}}>check_circle</div>No active disputes — great!</div>
-            ):txs.filter(t=>t.status==="disputed").map(tx=>(
-              <div key={tx.id} style={{border:`1.5px solid #fecaca`,borderRadius:12,padding:"16px 18px",background:"#fff5f5",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:12,marginBottom:10}}>
-                <div><div style={{fontWeight:700,fontSize:14,color:T.red,marginBottom:3}}>{tx.title}</div><div style={{fontSize:12.5,color:T.gray500}}>{tx.id} · ${tx.amount.toLocaleString()} · {tx.other}</div></div>
-                <Btn variant="red" style={{fontSize:13}} onClick={()=>setShowDispute(tx)}>View / Update →</Btn>
-              </div>
-            ))}
-            <div style={{marginTop:24,padding:"18px 20px",background:"#eff6ff",border:"1px solid #bfdbfe",borderRadius:12}}>
-              <div style={{fontWeight:700,fontSize:13.5,color:T.primary,marginBottom:10}}>How the dispute process works</div>
-              <div className="g2" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:9}}>
-                {["Escrow funds frozen when dispute is filed","AI generates case summary and timeline automatically","Both parties submit evidence within 48 hours","Binding decision by officer within 5 days","Refund or payment released based on outcome"].map((s,i)=>(
-                  <div key={i} style={{display:"flex",gap:8,fontSize:13,color:"#1e40af"}}><span style={{fontWeight:700,flexShrink:0}}>{i+1}.</span>{s}</div>
+            <div style={{fontWeight:700,fontSize:14,color:T.primary,marginBottom:12}}>Active Disputes</div>
+            {txs.filter(t=>t.status==="disputed").length===0
+              ?<div style={{textAlign:"center",padding:"32px",color:T.gray400,fontSize:14,background:T.offWhite,borderRadius:12}}><span className="msym" style={{fontSize:36,display:"block",marginBottom:10}}>check_circle</span>No active disputes.</div>
+              :txs.filter(t=>t.status==="disputed").map(tx=>(
+                <div key={tx.id} style={{border:"1.5px solid #fecaca",borderRadius:12,padding:"14px 16px",background:"#fff5f5",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:12,marginBottom:10}}>
+                  <div><div style={{fontWeight:700,fontSize:14,color:T.red,marginBottom:3}}>{tx.title}</div><div style={{fontSize:12.5,color:T.gray500}}>{tx.id} &bull; ${tx.amount.toLocaleString()} &bull; {tx.other}</div></div>
+                  <Btn variant="red" style={{fontSize:13}} onClick={()=>setShowDispute(tx)}>View / Update</Btn>
+                </div>
+              ))
+            }
+            <div style={{marginTop:20,padding:"16px",background:"#eff6ff",border:"1px solid #bfdbfe",borderRadius:12}}>
+              <div style={{fontWeight:700,fontSize:13,color:T.primary,marginBottom:10}}>How it works</div>
+              <div className="g2-dash" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+                {["Escrow funds frozen on filing","AI generates case summary automatically","Both parties submit evidence within 48h","Binding officer decision within 5 days","Refund or release based on outcome"].map((s,i)=>(
+                  <div key={i} style={{display:"flex",gap:8,fontSize:13,color:"#1e40af"}}><span style={{fontWeight:700,color:T.primary,flexShrink:0}}>{i+1}.</span>{s}</div>
                 ))}
               </div>
             </div>
           </div>
         )}
 
-        {/* SETTINGS TAB — bento grid matching team design */}
-        {tab==="settings"&&(<SettingsTab user={user}/>)}
-
+        {/* SETTINGS TAB */}
+        {tab==="settings"&&<SettingsTab user={user}/>}
 
         {/* HISTORY TAB */}
         {tab==="history"&&(
-          <div style={{background:T.white,border:`1px solid ${T.gray100}`,borderRadius:16,padding:"clamp(20px,4vw,32px)"}}>
-            <h2 style={{fontFamily:"'Inter',sans-serif",fontSize:22,color:T.primary,marginBottom:6}}>Transaction History</h2>
-            <p style={{color:T.gray500,fontSize:14}}>Complete archive with AI audit reports attached to every completed project.</p>
-            <div style={{marginTop:18,display:"flex",gap:12}}><Btn variant="outline">Download Statement (PDF)</Btn><Btn variant="ghost" style={{color:T.primary}}>Export via API →</Btn></div>
+          <div style={{background:T.white,border:"1px solid "+T.gray100,borderRadius:14,padding:"clamp(16px,4vw,28px)"}}>
+            <h2 style={{fontSize:"clamp(18px,3vw,22px)",fontWeight:700,color:T.primary,marginBottom:6}}>Transaction History</h2>
+            <p style={{color:T.gray500,fontSize:14,marginBottom:16}}>Complete archive with AI audit reports attached to every completed project.</p>
+            <div className="hist-row" style={{display:"flex",gap:10,marginBottom:18,flexWrap:"wrap"}}>
+              <Btn variant="outline" style={{fontSize:13}}><span className="msym" style={{fontSize:16}}>download</span>Download Statement (PDF)</Btn>
+              <Btn variant="ghost" style={{color:T.primary,fontSize:13}}>Export via API</Btn>
+            </div>
+            <div style={{overflowX:"auto"}}>
+              <table style={{width:"100%",borderCollapse:"collapse",minWidth:380}}>
+                <thead><tr style={{background:T.offWhite}}>
+                  {["Transaction","Value","Status","Date"].map(h=>(
+                    <th key={h} style={{padding:"10px 12px",textAlign:"left",fontSize:10.5,fontWeight:700,color:T.gray500,textTransform:"uppercase",letterSpacing:".06em",borderBottom:"1px solid "+T.gray100,whiteSpace:"nowrap"}}>{h}</th>
+                  ))}
+                </tr></thead>
+                <tbody>
+                  {txs.map((tx,i)=>(
+                    <tr key={tx.id} className="tr" style={{borderBottom:i<txs.length-1?"1px solid "+T.gray100:"none"}}>
+                      <td style={{padding:"12px"}}>
+                        <div style={{fontWeight:600,fontSize:13,color:T.primary}}>{tx.title}</div>
+                        <div style={{fontSize:11,color:T.gray400,marginTop:1}}>{tx.id}</div>
+                      </td>
+                      <td style={{padding:"12px",fontWeight:700,fontSize:13,color:T.primary,whiteSpace:"nowrap"}}>${tx.amount.toLocaleString()}</td>
+                      <td style={{padding:"12px"}}><SB status={tx.status}/></td>
+                      <td style={{padding:"12px",fontSize:12,color:T.gray400,whiteSpace:"nowrap"}}>{tx.date}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </div>
 
       {/* NEW TRANSACTION MODAL */}
       {showNew&&(
-        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,.5)",zIndex:500,display:"flex",alignItems:"center",justifyContent:"center",padding:16}} onClick={e=>e.target===e.currentTarget&&setShowNew(false)}>
-          <div style={{background:T.white,borderRadius:20,width:"100%",maxWidth:560,maxHeight:"90vh",overflowY:"auto",boxShadow:"0 32px 80px rgba(0,0,0,.22)",animation:"fadeUp .25s ease"}}>
-            <div style={{background:`linear-gradient(135deg,${T.primary},${T.primaryDk})`,padding:"22px 26px",color:T.white,position:"sticky",top:0,zIndex:1}}>
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,.5)",zIndex:500,display:"flex",alignItems:"flex-end",justifyContent:"center"}} onClick={e=>e.target===e.currentTarget&&setShowNew(false)}>
+          <div style={{background:T.white,borderRadius:"20px 20px 0 0",width:"100%",maxWidth:560,maxHeight:"92vh",overflowY:"auto",boxShadow:"0 -8px 40px rgba(0,0,0,.18)",animation:"fadeUp .25s ease"}}>
+            <div style={{background:"linear-gradient(135deg,"+T.primary+","+T.primaryDk+")",padding:"18px 20px",color:T.white,position:"sticky",top:0,zIndex:1,borderRadius:"20px 20px 0 0"}}>
               <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                <div><div style={{fontWeight:700,fontSize:16}}>New Tech Escrow Transaction</div><div style={{fontSize:12,opacity:.6,marginTop:2}}>Step {ns} of 3 — {["Project Details","Parties & Terms","Review"][ns-1]}</div></div>
-                <button onClick={()=>{setShowNew(false);setNs(1);}} style={{background:"rgba(255,255,255,.12)",border:"none",color:T.white,borderRadius:"50%",width:30,height:30,cursor:"pointer",fontSize:16,display:"flex",alignItems:"center",justifyContent:"center"}}>×</button>
+                <div>
+                  <div style={{fontWeight:700,fontSize:16}}>New Escrow Transaction</div>
+                  <div style={{fontSize:12,opacity:.6,marginTop:2}}>Step {ns} of 3 &mdash; {["Project Details","Parties & Terms","Review"][ns-1]}</div>
+                </div>
+                <button onClick={()=>{setShowNew(false);setNs(1);}} style={{background:"rgba(255,255,255,.12)",border:"none",color:T.white,borderRadius:"50%",width:30,height:30,cursor:"pointer",fontSize:16,display:"flex",alignItems:"center",justifyContent:"center"}}>
+                  <span className="msym" style={{fontSize:18}}>close</span>
+                </button>
               </div>
-              <div style={{display:"flex",gap:5,marginTop:14}}>{[1,2,3].map(n=><div key={n} style={{flex:1,height:3,borderRadius:2,background:ns>=n?T.accent:"rgba(255,255,255,.18)",transition:"background .2s"}}/>)}</div>
+              <div style={{display:"flex",gap:5,marginTop:12}}>{[1,2,3].map(n=><div key={n} style={{flex:1,height:3,borderRadius:2,background:ns>=n?T.accent:"rgba(255,255,255,.18)",transition:"background .2s"}}/>)}</div>
             </div>
-            <div style={{padding:"24px"}}>
+            <div style={{padding:"18px 16px"}}>
               {ns===1&&(
-                <div style={{display:"flex",flexDirection:"column",gap:16}}>
+                <div style={{display:"flex",flexDirection:"column",gap:14}}>
                   <Btn variant="teal" style={{width:"100%",fontSize:13}} onClick={()=>setShowScope(true)}><span className="msym" style={{fontSize:16}}>smart_toy</span>Use AI Scope Generator</Btn>
-                  {scope&&<div style={{background:T.tealLt,border:`1px solid #99f6e4`,borderRadius:9,padding:"11px 13px",fontSize:13,color:"#0f766e"}}><span className="msym" style={{fontSize:15,verticalAlign:"middle",marginRight:6}}>check_circle</span>Scope applied: <strong>{scope.title}</strong></div>}
+                  {scope&&<div style={{background:T.tealLt,border:"1px solid #99f6e4",borderRadius:9,padding:"10px 12px",fontSize:13,color:"#005235",display:"flex",alignItems:"center",gap:8}}><span className="msym" style={{fontSize:15}}>check_circle</span>Scope applied: <strong>{scope.title}</strong></div>}
                   <F label="Project Title" req><input style={fs} placeholder="e.g. E-commerce Backend Development" value={nf.title||scope?.title||""} onChange={hn("title")}/></F>
                   <div>
                     <div style={{fontSize:13,fontWeight:600,color:T.gray700,marginBottom:8}}>Service Category *</div>
-                    <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:6}}>
-                      {CATS.map(c=><button key={c.id} onClick={()=>setNf(p=>({...p,type:c.id}))} style={{border:`1.5px solid ${nf.type===c.id?c.color:T.gray100}`,borderRadius:8,padding:"8px 4px",cursor:"pointer",textAlign:"center",background:nf.type===c.id?c.color+"12":T.white,transition:"all .15s"}}><div style={{fontSize:16}}><span className="msym" style={{fontSize:20,color:c.color||T.primary}}>{c.icon}</span></div><div style={{fontSize:9,fontWeight:600,color:nf.type===c.id?c.color:T.gray500,marginTop:2,lineHeight:1.2}}>{c.label}</div></button>)}
+                    <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:5}}>
+                      {CATS.map(c=>(
+                        <button key={c.id} onClick={()=>setNf(p=>({...p,type:c.id}))} style={{border:"1.5px solid "+(nf.type===c.id?c.color:T.gray100),borderRadius:8,padding:"7px 3px",cursor:"pointer",textAlign:"center",background:nf.type===c.id?c.color+"12":T.white,transition:"all .15s"}}>
+                          <span className="msym" style={{fontSize:18,color:nf.type===c.id?c.color:T.gray400,display:"block",marginBottom:2}}>{c.icon}</span>
+                          <div style={{fontSize:8.5,fontWeight:600,color:nf.type===c.id?c.color:T.gray500,lineHeight:1.2}}>{c.label}</div>
+                        </button>
+                      ))}
                     </div>
                   </div>
                   <div style={{display:"grid",gridTemplateColumns:"1fr 90px",gap:10}}>
@@ -1666,39 +1710,46 @@ const Dashboard=({user,onLogout,navigate})=>{
                 </div>
               )}
               {ns===2&&(
-                <div style={{display:"flex",flexDirection:"column",gap:16}}>
+                <div style={{display:"flex",flexDirection:"column",gap:14}}>
                   <div>
                     <div style={{fontSize:13,fontWeight:600,color:T.gray700,marginBottom:8}}>Your Role *</div>
                     <div style={{display:"flex",gap:8}}>
-                      {[["buyer","Client"],["seller","Provider"],["broker","Broker"]].map(([v,l])=><button key={v} onClick={()=>setNf(p=>({...p,role:v}))} style={{flex:1,padding:"10px 0",border:`1.5px solid ${nf.role===v?T.primary:T.gray100}`,borderRadius:8,background:nf.role===v?"rgba(26,86,160,.07)":T.white,cursor:"pointer",fontSize:12.5,fontWeight:700,color:nf.role===v?T.primary:T.gray500,transition:"all .15s"}}>{l}</button>)}
+                      {[["buyer","Client"],["seller","Provider"],["broker","Broker"]].map(([v,l])=>(
+                        <button key={v} onClick={()=>setNf(p=>({...p,role:v}))} style={{flex:1,padding:"10px 0",border:"1.5px solid "+(nf.role===v?T.primary:T.gray100),borderRadius:8,background:nf.role===v?"rgba(0,22,55,.07)":T.white,cursor:"pointer",fontSize:12.5,fontWeight:700,color:nf.role===v?T.primary:T.gray500,transition:"all .15s"}}>{l}</button>
+                      ))}
                     </div>
                   </div>
                   <F label="Counterparty Email" req><input style={fs} type="email" placeholder="their@email.com" value={nf.counterparty} onChange={hn("counterparty")}/></F>
                   <F label="Review Period"><select style={fs} value={nf.days} onChange={hn("days")}>{[1,2,3,5,7,10,14].map(d=><option key={d} value={d}>{d} {d===1?"day":"days"}</option>)}</select></F>
-                  <div style={{background:T.tealLt,border:`1px solid #99f6e4`,borderRadius:8,padding:"11px 13px",fontSize:13,color:"#0f766e"}}><span className="msym" style={{fontSize:14,verticalAlign:"middle",marginRight:6}}>mail</span>The counterparty will receive an invitation to review the scope and join this transaction.</div>
+                  <div style={{background:T.tealLt,border:"1px solid #99f6e4",borderRadius:8,padding:"10px 12px",fontSize:13,color:"#005235",display:"flex",alignItems:"center",gap:8}}>
+                    <span className="msym" style={{fontSize:14}}>mail</span>The counterparty will receive an invitation to review and join this transaction.
+                  </div>
                 </div>
               )}
               {ns===3&&(
                 <div>
-                  <div style={{fontWeight:700,fontSize:14.5,color:T.primary,marginBottom:14}}>Review Transaction</div>
-                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:9,marginBottom:16}}>
-                    {[["Title",nf.title||scope?.title||"—"],["Category",CATS.find(c=>c.id===nf.type)?.label||"—"],["Value",`${nf.currency} ${parseFloat(nf.amount||0).toLocaleString()}`],["Role",nf.role],["Milestones",`${nf.milestones}`],["Review Period",`${nf.days} days`],["Counterparty",nf.counterparty||"—"],["AI Audit","Included"]].map(([k,v])=>(
-                      <div key={k} style={{background:T.offWhite,borderRadius:8,padding:"10px 12px"}}><div style={{fontSize:10.5,fontWeight:700,textTransform:"uppercase",letterSpacing:".06em",color:T.gray400,marginBottom:2}}>{k}</div><div style={{fontSize:13,fontWeight:600,color:T.primary}}>{v||"—"}</div></div>
+                  <div style={{fontWeight:700,fontSize:14,color:T.primary,marginBottom:12}}>Review Transaction</div>
+                  <div className="modal-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:14}}>
+                    {[["Title",nf.title||scope?.title||""],["Category",CATS.find(c=>c.id===nf.type)?.label||""],["Value",nf.currency+" "+parseFloat(nf.amount||0).toLocaleString()],["Role",nf.role],["Milestones",""+nf.milestones],["Review",nf.days+" days"],["Counterparty",nf.counterparty||""],["AI Audit","Included"]].map(([k,v])=>(
+                      <div key={k} style={{background:T.offWhite,borderRadius:8,padding:"9px 11px"}}>
+                        <div style={{fontSize:10,fontWeight:700,textTransform:"uppercase",letterSpacing:".06em",color:T.gray400,marginBottom:2}}>{k}</div>
+                        <div style={{fontSize:13,fontWeight:600,color:T.primary}}>{v||""}</div>
+                      </div>
                     ))}
                   </div>
-                  <div style={{background:T.offWhite,borderRadius:9,padding:"12px 14px",fontSize:13,color:T.gray600,lineHeight:1.7}}>By creating this transaction you agree to Escrow's Terms of Service. An AI contract will be generated automatically, and AI audits will run at each milestone submission.</div>
+                  <div style={{background:T.offWhite,borderRadius:9,padding:"11px 13px",fontSize:13,color:T.gray600,lineHeight:1.7}}>By creating this transaction you agree to the Terms of Service. An AI contract will be generated automatically.</div>
                 </div>
               )}
-              <div style={{display:"flex",justifyContent:"space-between",marginTop:20,gap:10}}>
-                <Btn variant="outline" onClick={()=>ns>1?setNs(p=>p-1):setShowNew(false)}>{ns===1?"Cancel":"← Back"}</Btn>
-                <Btn variant="accent" onClick={()=>ns<3?setNs(p=>p+1):createTx()} disabled={ns===1&&(!(nf.title||scope?.title)||!nf.amount)}>{ns<3?"Continue →":"Create Transaction →"}</Btn>
+              <div style={{display:"flex",justifyContent:"space-between",marginTop:18,gap:10}}>
+                <Btn variant="outline" onClick={()=>ns>1?setNs(p=>p-1):setShowNew(false)}>{ns===1?"Cancel":"Back"}</Btn>
+                <Btn variant="accent" onClick={()=>ns<3?setNs(p=>p+1):createTx()} disabled={ns===1&&(!(nf.title||scope?.title)||!nf.amount)}>{ns<3?"Continue":"Create Transaction"}</Btn>
               </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* MODAL STACK */}
+      {/* Modals */}
       {showKYC&&<KYC onClose={()=>setShowKYC(false)} onComplete={()=>{setKycDone(true);setShowKYC(false);}}/>}
       {showAudit&&<AuditModal tx={showAudit} onClose={()=>setShowAudit(null)} onApprove={()=>setTxs(p=>p.map(t=>t.id===showAudit.id?{...t,status:"approved"}:t))} onRevision={()=>setTxs(p=>p.map(t=>t.id===showAudit.id?{...t,status:"revision"}:t))}/>}
       {showDispute&&<DisputeModal tx={showDispute} onClose={()=>setShowDispute(null)} onSubmit={()=>setTxs(p=>p.map(t=>t.id===showDispute.id?{...t,status:"disputed"}:t))}/>}
@@ -1706,17 +1757,18 @@ const Dashboard=({user,onLogout,navigate})=>{
       {showScope&&<ScopeModal catLabel={CATS.find(c=>c.id===nf.type)?.label||"Software"} onClose={()=>setShowScope(false)} onApply={s=>{setScope(s);setNf(p=>({...p,title:s.title}));}}/>}
 
       {/* Mobile Bottom Nav */}
-      <nav className="mbb" style={{display:"none",position:"fixed",bottom:0,left:0,right:0,zIndex:50,background:"#fbf9fc",borderTop:"1px solid #c5c6cf",boxShadow:"0 -2px 12px rgba(0,0,0,.06)",justifyContent:"space-around",alignItems:"center",height:72,padding:"0 8px"}}>
-        {[["transactions","dashboard","Transactions"],["kyc","badge","KYC"],["disputes","gavel","Disputes"],["settings","manage_accounts","Account"]].map(([k,icon,label])=>(
-          <button key={k} onClick={()=>{setTab(k);setDetail(null);}} style={{background:"none",border:"none",cursor:"pointer",display:"flex",flexDirection:"column",alignItems:"center",gap:3,padding:"6px 10px",borderRadius:10,color:tab===k?"#001637":"#44474e"}}>
-            <span className="msym" style={{fontSize:22}}>{icon}</span>
-            <span style={{fontSize:10.5,fontWeight:tab===k?700:500,letterSpacing:".02em"}}>{label}</span>
+      <nav className="mbb" style={{display:"none",position:"fixed",bottom:0,left:0,right:0,zIndex:50,background:"#fbf9fc",borderTop:"1px solid #c5c6cf",boxShadow:"0 -2px 12px rgba(0,0,0,.06)",justifyContent:"space-around",alignItems:"center",height:66,padding:"0 4px"}}>
+        {TABS.map(([k,icon,label])=>(
+          <button key={k} onClick={()=>switchTab(k)} style={{background:"none",border:"none",cursor:"pointer",display:"flex",flexDirection:"column",alignItems:"center",gap:2,padding:"5px 6px",color:tab===k?"#001637":"#44474e",flex:1,minWidth:0,borderTop:tab===k?"2px solid #001637":"2px solid transparent"}}>
+            <span className="msym" style={{fontSize:22,color:tab===k?"#001637":"#75777f"}}>{icon}</span>
+            <span style={{fontSize:9.5,fontWeight:tab===k?700:500,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",maxWidth:"100%"}}>{label}</span>
           </button>
         ))}
       </nav>
     </div>
   );
 };
+
 
 /* ═══ SPLASH SCREEN (team design — intro before home) ═══════ */
 const SplashScreen=({onDone})=>{
@@ -1746,7 +1798,7 @@ const SplashScreen=({onDone})=>{
             </div>
           </div>
           <div style={{textAlign:"center"}}>
-            <h1 style={{fontSize:30,fontWeight:800,color:"#001637",letterSpacing:"-.4px",marginBottom:4}}><span style={{color:"#006c47"}}>Escrow</span></h1>
+            <h1 style={{fontSize:30,fontWeight:800,color:"#001637",letterSpacing:"-.4px",marginBottom:4}}>Vault<span style={{color:"#006c47"}}>Pay</span></h1>
             <p style={{fontSize:11.5,fontWeight:600,color:"#75777f",letterSpacing:".2em",textTransform:"uppercase"}}>Institutional Trust</p>
           </div>
         </div>
@@ -1775,8 +1827,8 @@ const Footer=()=>(
       <div className="fg" style={{display:"grid",gridTemplateColumns:"2fr 1fr 1fr 1fr 1fr",gap:36,marginBottom:48}}>
         <div>
           <div style={{fontWeight:800,fontSize:20,marginBottom:14,display:"flex",alignItems:"center",gap:10}}>
-            <div style={{width:34,height:34,background:T.primary,borderRadius:8,display:"flex",alignItems:"center",justifyContent:"center",color:T.white,fontWeight:800,fontSize:16}}>E</div>
-            <span style={{color:T.gold}}>Escrow</span>
+            <div style={{width:34,height:34,background:T.primary,borderRadius:8,display:"flex",alignItems:"center",justifyContent:"center",color:T.white,fontWeight:800,fontSize:16}}>V</div>
+            Vault<span style={{color:T.gold}}>Pay</span>
           </div>
           <p style={{fontSize:13.5,color:"rgba(255,255,255,.44)",lineHeight:1.85,maxWidth:280,marginBottom:18}}>The AI-powered escrow platform for tech services — protecting clients and providers worldwide.</p>
           <div style={{display:"flex",gap:7,flexWrap:"wrap"}}>
@@ -1787,7 +1839,7 @@ const Footer=()=>(
           {title:"Services",  links:["Software Dev Escrow","Mobile App Escrow","Website Escrow","UI/UX Escrow","Cybersecurity","Cloud & DevOps","AI Development","IT Consulting","Data Analytics","Tech Docs"]},
           {title:"AI Features",links:["Scope Generator","Contract Generator","Deliverable Auditor","Fraud Detection","Dispute Assistant","Risk Scoring","Health Monitor"]},
           {title:"Business",  links:["Enterprise Plans","Escrow API","White Label","Become a Partner","API Documentation","Webhooks","Sandbox"]},
-          {title:"Company",   links:["About Escrow","Careers","Blog","Press","Help Center","Contact Us","Terms of Service","Privacy Policy"]},
+          {title:"Company",   links:["About VaultPay","Careers","Blog","Press","Help Center","Contact Us","Terms of Service","Privacy Policy"]},
         ].map(col=>(
           <div key={col.title}>
             <div style={{fontWeight:700,fontSize:11.5,textTransform:"uppercase",letterSpacing:".08em",color:"rgba(255,255,255,.35)",marginBottom:14}}>{col.title}</div>
@@ -1796,7 +1848,7 @@ const Footer=()=>(
         ))}
       </div>
       <div style={{borderTop:"1px solid rgba(255,255,255,.08)",paddingTop:22,display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:12}}>
-        <span style={{fontSize:12,color:"rgba(255,255,255,.28)"}}>© 2005–2025 Escrow Inc. All rights reserved. Licensed financial services provider.</span>
+        <span style={{fontSize:12,color:"rgba(255,255,255,.28)"}}>© 2005–2025 VaultPay Inc. All rights reserved. Licensed financial services provider.</span>
         <div style={{display:"flex",gap:16,flexWrap:"wrap"}}>
           {["Privacy","Terms","Licenses","Legal","Cookies","GDPR"].map(l=><span key={l} style={{fontSize:12,color:"rgba(255,255,255,.28)",cursor:"pointer"}}>{l}</span>)}
         </div>
