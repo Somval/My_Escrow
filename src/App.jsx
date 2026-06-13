@@ -127,8 +127,8 @@ const Navbar=({onLogin,onSignup,navigate})=>{
     <nav style={{background:T.white,position:"sticky",top:0,zIndex:300,boxShadow:sc?"0 2px 20px rgba(0,0,0,.1)":"0 1px 0 #e2e8f0",transition:"box-shadow .2s"}}>
       <div style={{maxWidth:1280,margin:"0 auto",padding:"0 1.5rem",display:"flex",alignItems:"center",height:64}}>
         <div style={{display:"flex",alignItems:"center",gap:10,cursor:"pointer",flexShrink:0}} onClick={()=>{navigate("home");setMob(false);}}>
-          <div style={{width:38,height:38,background:`linear-gradient(135deg,${T.primary},${T.primaryDk})`,borderRadius:10,display:"flex",alignItems:"center",justifyContent:"center"}}><span style={{color:T.white,fontWeight:800,fontSize:18,fontFamily:"'Inter',sans-serif"}}>V</span></div>
-          <span style={{fontWeight:800,fontSize:20,color:T.primary,letterSpacing:"-.4px"}}>Vault<span style={{color:T.green}}>Pay</span></span>
+          <div style={{width:38,height:38,background:`linear-gradient(135deg,${T.primary},${T.primaryDk})`,borderRadius:10,display:"flex",alignItems:"center",justifyContent:"center"}}><span style={{color:T.white,fontWeight:800,fontSize:18,fontFamily:"'Inter',sans-serif"}}>E</span></div>
+          <span style={{fontWeight:800,fontSize:20,color:T.primary,letterSpacing:"-.4px"}}><span style={{color:T.green}}>Escrow</span></span>
         </div>
         <div className="ndsk" style={{display:"flex",alignItems:"center",gap:2,marginLeft:28,flex:1}}>
           {NAV.map(item=>(
@@ -186,7 +186,7 @@ const Hero=({onSignup})=>{
         <div>
           <div style={{marginBottom:18}}><Badge color={T.secondary||T.green} sz="md">AI-Powered Tech Services Escrow</Badge></div>
           <h1 className="fu" style={{fontFamily:"'Inter',sans-serif",fontSize:"clamp(30px,4.5vw,54px)",fontWeight:700,lineHeight:1.15,marginBottom:20,letterSpacing:"-.5px"}}>Secure escrow for<br/>tech services — with<br/><span style={{color:T.gold}}>built-in AI auditing</span></h1>
-          <p className="fu2" style={{fontSize:"clamp(14px,1.8vw,16px)",color:"rgba(255,255,255,.75)",lineHeight:1.85,marginBottom:36,maxWidth:480}}>VaultPay holds client payments for software, design, and cloud projects — releasing funds only after AI confirms deliverables meet the agreed scope. No chargebacks. No fraud. Full protection for both sides.</p>
+          <p className="fu2" style={{fontSize:"clamp(14px,1.8vw,16px)",color:"rgba(255,255,255,.75)",lineHeight:1.85,marginBottom:36,maxWidth:480}}>Escrow holds client payments for software, design, and cloud projects — releasing funds only after AI confirms deliverables meet the agreed scope. No chargebacks. No fraud. Full protection for both sides.</p>
           <div className="hcta fu3" style={{display:"flex",gap:12,flexWrap:"wrap",marginBottom:40}}>
             <Btn variant="accent" style={{fontSize:15,padding:"13px 28px"}} onClick={onSignup}>Start a Project →</Btn>
             <Btn variant="outlineW" style={{fontSize:15,padding:"13px 24px"}}>See How It Works</Btn>
@@ -451,7 +451,7 @@ const Enterprise=({onSignup})=>(
           {icon:"check_circle",title:"Approval Workflows",        desc:"Require internal sign-off before releasing escrow funds. Multi-stage approval chains with full audit trail."},
           {icon:"bar_chart",title:"Advanced Reporting",        desc:"Transaction volume, fee summaries, dispute rates, AI audit pass rates. Export to CSV or via the API."},
           {icon:"cable",title:"API Integrations",          desc:"Full REST API with webhooks, sandbox, and SDKs for Node.js, Python, PHP, and Go."},
-          {icon:"local_offer",title:"White-Label Escrow",        desc:"Use your own domain, logo, and brand colours. Clients see your brand — not VaultPay."},
+          {icon:"local_offer",title:"White-Label Escrow",        desc:"Use your own domain, logo, and brand colours. Clients see your brand — not Escrow."},
           {icon:"handshake",title:"Dedicated Account Manager", desc:"Assigned account manager for onboarding, support, and custom integration assistance."},
           {icon:"assignment",title:"Custom SLA",                desc:"Guaranteed 99.9% uptime, priority support queue, and custom dispute resolution timelines."},
         ].map(f=>(
@@ -500,9 +500,9 @@ const Security=()=>(
 const Testimonials=()=>(
   <section style={{padding:"90px 1.5rem",background:T.offWhite}}>
     <div style={{maxWidth:1280,margin:"0 auto"}}>
-      <ST badge="Client Stories" title="1.8M+ customers trust VaultPay"/>
+      <ST badge="Client Stories" title="1.8M+ customers trust Escrow"/>
       <div className="g3" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:22}}>
-        {[{n:"Tunde A.", r:"Startup CTO",     t:"We used VaultPay for a $40k backend build. The AI audit caught a missing API endpoint before we released payment. Worth every cent.",stars:5},
+        {[{n:"Tunde A.", r:"Startup CTO",     t:"We used Escrow for a $40k backend build. The AI audit caught a missing API endpoint before we released payment. Worth every cent.",stars:5},
           {n:"Sarah K.", r:"Product Manager", t:"The AI scope generator saved me two hours of back-and-forth. Incredible platform — exactly what tech services have always needed.",stars:5},
           {n:"David L.", r:"Freelance Dev",   t:"As a provider I love that clients can't withhold payment arbitrarily. The AI audit proves the work is complete. Total peace of mind.",stars:5},
           {n:"Aisha M.", r:"Agency Director", t:"We ran three simultaneous projects. The health monitor flagged one going off-track early. Dispute avoided entirely.",stars:5},
@@ -527,7 +527,7 @@ const Testimonials=()=>(
 const FAQ=()=>{
   const [op,setOp]=useState(null);
   const qs=[
-    {q:"What makes VaultPay different from regular escrow?",a:"VaultPay is built specifically for tech services. Every transaction includes AI scope generation, contract drafting, deliverable auditing, fraud detection, and dispute assistance — so both parties always agree on what 'done' means before any money moves."},
+    {q:"What makes Escrow different from regular escrow?",a:"Escrow is built specifically for tech services. Every transaction includes AI scope generation, contract drafting, deliverable auditing, fraud detection, and dispute assistance — so both parties always agree on what 'done' means before any money moves."},
     {q:"How does the AI Deliverable Auditor work?",a:"When a provider submits work, the Auditor checks it against the agreed scope. For code it analyses the repo structure, test coverage, and feature completeness. For websites it crawls the live URL. For designs it compares files against the brief. For documents it checks completeness against the agreed table of contents."},
     {q:"What are the 9 steps of the escrow workflow?",a:"Project Creation → Contract Generation → Escrow Funding → Project Execution → Deliverable Submission → AI Audit → Approval / Revision Request → Payment Release → Dispute Resolution (if needed). Every step is tracked and timestamped."},
     {q:"What happens during a dispute?",a:"The AI Dispute Assistant automatically reconstructs the project timeline, analyses all messages and files, and produces an objective case brief. A Dispute Resolution Officer reviews and issues a binding decision within 5 business days. Both parties can upload evidence."},
@@ -598,9 +598,9 @@ const AuthShell=({children,navigate})=>(
     <header style={{background:"#fff",borderBottom:"1px solid #e4e2e5",height:64,display:"flex",alignItems:"center",justifyContent:"space-between",padding:"0 1.5rem",position:"sticky",top:0,zIndex:10,boxShadow:"0 1px 0 #e4e2e5"}}>
       <div style={{display:"flex",alignItems:"center",gap:10,cursor:"pointer"}} onClick={()=>navigate("home")}>
         <div style={{width:36,height:36,background:"linear-gradient(135deg,#1a56a0,#0f3d7a)",borderRadius:9,display:"flex",alignItems:"center",justifyContent:"center"}}>
-          <span style={{color:"#fff",fontWeight:800,fontSize:17,fontFamily:"'Inter',sans-serif"}}>V</span>
+          <span style={{color:"#fff",fontWeight:800,fontSize:17,fontFamily:"'Inter',sans-serif"}}>E</span>
         </div>
-        <span style={{fontWeight:800,fontSize:19,color:"#001637",letterSpacing:"-.4px"}}>Vault<span style={{color:"#006c47"}}>Pay</span></span>
+        <span style={{fontWeight:800,fontSize:19,color:"#001637",letterSpacing:"-.4px"}}><span style={{color:"#006c47"}}>Escrow</span></span>
       </div>
     </header>
     {/* Content */}
@@ -631,7 +631,7 @@ const LoginPage=({onSuccess,navigate})=>{
             <span className="msym" style={{fontSize:28,color:"#fff"}}>shield_lock</span>
           </div>
           <h1 style={{fontFamily:"'Inter',sans-serif",fontSize:28,fontWeight:700,color:"#001637",letterSpacing:"-.4px",marginBottom:6}}>Welcome back</h1>
-          <p style={{fontSize:14,color:"#44474e",lineHeight:1.6}}>Sign in to your VaultPay account</p>
+          <p style={{fontSize:14,color:"#44474e",lineHeight:1.6}}>Sign in to your Escrow account</p>
         </div>
         <div className="auth-card">
           {done?(
@@ -693,7 +693,7 @@ const LoginPage=({onSuccess,navigate})=>{
               </div>
               {/* Footer link */}
               <p style={{textAlign:"center",fontSize:13.5,color:"#44474e",borderTop:"1px solid #e4e2e5",paddingTop:16,margin:0}}>
-                New to VaultPay?{" "}
+                New to Escrow?{" "}
                 <span style={{color:"#001637",fontWeight:700,cursor:"pointer"}} onClick={()=>navigate("signup")}>Create a free account →</span>
               </p>
             </form>
@@ -877,7 +877,7 @@ const ForgotPasswordPage=({navigate})=>{
           )}
         </div>
         <p style={{textAlign:"center",marginTop:16,fontSize:11.5,color:"#75777f",lineHeight:1.6}}>
-          VaultPay uses bank-grade encryption to protect your account and financial transactions.
+          Escrow uses bank-grade encryption to protect your account and financial transactions.
         </p>
       </div>
     </AuthShell>
@@ -953,7 +953,7 @@ const ScopeModal=({catLabel,onClose,onApply})=>{
   const gen=async()=>{
     if(!desc.trim())return;setLd(true);
     try{
-      const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,messages:[{role:"user",content:`You are VaultPay's AI Scope Generator for tech services escrow.\nCategory: ${catLabel}\nClient brief: ${desc}\nReturn ONLY valid JSON:\n{"title":"short project title","overview":"2-sentence overview","deliverables":["item1","item2","item3","item4","item5"],"milestones":[{"name":"name","description":"what's delivered","timeline":"e.g. Week 2"}],"acceptance":["criterion1","criterion2","criterion3"],"timeline":"total timeline","revisions":"revision policy"}`}]})});
+      const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,messages:[{role:"user",content:`You are Escrow's AI Scope Generator for tech services escrow.\nCategory: ${catLabel}\nClient brief: ${desc}\nReturn ONLY valid JSON:\n{"title":"short project title","overview":"2-sentence overview","deliverables":["item1","item2","item3","item4","item5"],"milestones":[{"name":"name","description":"what's delivered","timeline":"e.g. Week 2"}],"acceptance":["criterion1","criterion2","criterion3"],"timeline":"total timeline","revisions":"revision policy"}`}]})});
       const d=await r.json();const txt=d.content?.map(i=>i.text||"").join("").replace(/```json|```/g,"").trim();setRes(JSON.parse(txt));
     }catch{setRes({title:"Tech Services Project",overview:"Development project as described, completed per agreed milestones with AI verification.",deliverables:["Core application development","API integrations","Testing & QA","Deployment","Documentation"],milestones:[{name:"Foundation",description:"Core setup and architecture",timeline:"Week 1–2"},{name:"Core Development",description:"Main features",timeline:"Week 3–5"},{name:"Delivery",description:"Testing and deployment",timeline:"Week 6"}],acceptance:["All features work as specified","Code passes automated tests","Documentation complete","Delivered on time"],timeline:"6 weeks",revisions:"2 rounds of revisions per milestone"});}
     setLd(false);
@@ -1010,7 +1010,7 @@ const ContractModal=({tx,scope,onClose})=>{
       try{
         const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1200,messages:[{role:"user",content:`Generate a professional tech services escrow agreement.\nProject: ${tx?.title||"Tech Services Project"}\nCategory: ${tx?.type||"Software Development"}\nValue: $${tx?.amount?.toLocaleString()||"TBD"} ${tx?.currency||"USD"}\nProvider: ${tx?.other||"[Provider]"}\nScope: ${scope?JSON.stringify(scope):"As agreed"}\n\nWrite a concise, professional escrow agreement covering: parties, project, deliverables, payment terms, milestone structure, revision policy, escrow terms, dispute resolution, governing law. No markdown — use numbered sections.`}]})});
         const d=await r.json();setContract(d.content?.map(i=>i.text||"").join("")||"");
-      }catch{setContract(`TECH SERVICES ESCROW AGREEMENT\n\n1. PARTIES\nThis Agreement is between the Client and Service Provider, facilitated by VaultPay Escrow Services ("Escrow Agent").\n\n2. PROJECT SCOPE\nThe Service Provider agrees to deliver "${tx?.title}" as described in the attached scope document within the agreed timeline.\n\n3. PAYMENT TERMS\nTotal project value: $${tx?.amount?.toLocaleString()||"TBD"} ${tx?.currency||"USD"}. Funds held in VaultPay's regulated trust account until deliverables are accepted.\n\n4. MILESTONE PAYMENTS\nPayments released per milestone upon Client approval following AI audit confirmation.\n\n5. REVISION POLICY\nClient is entitled to two (2) revision rounds per milestone. Additional revisions quoted separately.\n\n6. DISPUTE RESOLUTION\nUnresolved disputes submitted to VaultPay's Dispute Resolution Officer. Decision binding within 5 business days.\n\n7. ESCROW TERMS\nFunds held in segregated, regulated trust accounts. Released only on Client approval or binding dispute resolution.\n\n8. GOVERNING LAW\nThis Agreement is governed by applicable jurisdiction law.`);}
+      }catch{setContract(`TECH SERVICES ESCROW AGREEMENT\n\n1. PARTIES\nThis Agreement is between the Client and Service Provider, facilitated by Escrow Escrow Services ("Escrow Agent").\n\n2. PROJECT SCOPE\nThe Service Provider agrees to deliver "${tx?.title}" as described in the attached scope document within the agreed timeline.\n\n3. PAYMENT TERMS\nTotal project value: $${tx?.amount?.toLocaleString()||"TBD"} ${tx?.currency||"USD"}. Funds held in Escrow's regulated trust account until deliverables are accepted.\n\n4. MILESTONE PAYMENTS\nPayments released per milestone upon Client approval following AI audit confirmation.\n\n5. REVISION POLICY\nClient is entitled to two (2) revision rounds per milestone. Additional revisions quoted separately.\n\n6. DISPUTE RESOLUTION\nUnresolved disputes submitted to Escrow's Dispute Resolution Officer. Decision binding within 5 business days.\n\n7. ESCROW TERMS\nFunds held in segregated, regulated trust accounts. Released only on Client approval or binding dispute resolution.\n\n8. GOVERNING LAW\nThis Agreement is governed by applicable jurisdiction law.`);}
       setLd(false);
     })();
   },[]);
@@ -1026,7 +1026,7 @@ const ContractModal=({tx,scope,onClose})=>{
             <div style={{textAlign:"center",padding:"48px 0"}}><span className="msym" style={{fontSize:42,color:T.primary,display:"block",marginBottom:14,animation:"pulse 1.5s ease infinite"}}>description</span><div style={{fontWeight:700,fontSize:16,color:T.primary,marginBottom:8}}>Generating contract…</div><p style={{fontSize:13,color:T.gray500}}>AI is drafting a legally-sound escrow agreement.</p></div>
           ):(
             <>
-              <div style={{background:"#eef2ff",border:"1px solid #c7d2fe",borderRadius:10,padding:"13px 15px",fontSize:13,color:"#3730a3",lineHeight:1.65,marginBottom:20}}><span className="msym" style={{fontSize:16,verticalAlign:"middle",marginRight:6}}>check_circle</span>Contract generated by VaultPay AI. Review before both parties sign.</div>
+              <div style={{background:"#eef2ff",border:"1px solid #c7d2fe",borderRadius:10,padding:"13px 15px",fontSize:13,color:"#3730a3",lineHeight:1.65,marginBottom:20}}><span className="msym" style={{fontSize:16,verticalAlign:"middle",marginRight:6}}>check_circle</span>Contract generated by Escrow AI. Review before both parties sign.</div>
               <div style={{background:T.offWhite,borderRadius:12,padding:"20px 22px",fontSize:13,color:T.gray700,lineHeight:2,whiteSpace:"pre-wrap",fontFamily:"Georgia, serif"}}>{contract}</div>
             </>
           )}
@@ -1049,7 +1049,7 @@ const AuditModal=({tx,onClose,onApprove,onRevision})=>{
   useEffect(()=>{
     (async()=>{
       try{
-        const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,messages:[{role:"user",content:`You are VaultPay's AI Deliverable Auditor. Analyse this project.\nTransaction: ${tx.id}\nProject: ${tx.title}\nCategory: ${tx.type}\nValue: $${tx.amount?.toLocaleString()} ${tx.currency||"USD"}\nProvider: ${tx.other}\nReturn ONLY valid JSON:\n{"score":0-100,"status":"passed"|"passed_with_notes"|"revision_required","summary":"2-sentence executive summary","risk":"low"|"medium"|"high","riskScore":0-100,"checks":[{"name":"check name","status":"passed"|"warning"|"failed","note":"detail"}],"recommendation":"one clear sentence"}`}]})});
+        const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,messages:[{role:"user",content:`You are Escrow's AI Deliverable Auditor. Analyse this project.\nTransaction: ${tx.id}\nProject: ${tx.title}\nCategory: ${tx.type}\nValue: $${tx.amount?.toLocaleString()} ${tx.currency||"USD"}\nProvider: ${tx.other}\nReturn ONLY valid JSON:\n{"score":0-100,"status":"passed"|"passed_with_notes"|"revision_required","summary":"2-sentence executive summary","risk":"low"|"medium"|"high","riskScore":0-100,"checks":[{"name":"check name","status":"passed"|"warning"|"failed","note":"detail"}],"recommendation":"one clear sentence"}`}]})});
         const d=await r.json();const txt=d.content?.map(i=>i.text||"").join("").replace(/```json|```/g,"").trim();setRes(JSON.parse(txt));
       }catch{setRes({score:84,status:"passed_with_notes",summary:"Core deliverables reviewed against scope. Requirements substantially met with minor observations.",risk:"low",riskScore:18,checks:[{name:"Scope Completion",status:"passed",note:"All primary deliverables submitted"},{name:"Code Quality",status:"passed",note:"No critical issues detected"},{name:"Test Coverage",status:"warning",note:"Coverage at 62% — below 70% target"},{name:"Documentation",status:"warning",note:"README missing deployment instructions"},{name:"Security Review",status:"passed",note:"No known vulnerabilities found"},{name:"Deadline Compliance",status:"passed",note:"Submitted within agreed timeline"}],recommendation:"Recommend approval with a note to improve test coverage and deployment docs."});}
       setLd(false);
@@ -1121,7 +1121,7 @@ const DisputeModal=({tx,onClose,onSubmit})=>{
   const sub=async()=>{
     if(!reason||!desc)return;setLd(true);
     try{
-      const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:600,messages:[{role:"user",content:`You are VaultPay's AI Dispute Assistant.\nTransaction: ${tx.title}\nCategory: ${tx.type}\nValue: $${tx.amount?.toLocaleString()}\nProvider: ${tx.other}\nReason: ${reason}\nDescription: ${desc}\nEvidence files: ${files.length>0?files.join(", "):"None"}\nGenerate a neutral 3-4 sentence dispute case summary covering: (1) nature of dispute, (2) key facts from both perspectives, (3) recommended resolution. Plain text only.`}]})});
+      const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:600,messages:[{role:"user",content:`You are Escrow's AI Dispute Assistant.\nTransaction: ${tx.title}\nCategory: ${tx.type}\nValue: $${tx.amount?.toLocaleString()}\nProvider: ${tx.other}\nReason: ${reason}\nDescription: ${desc}\nEvidence files: ${files.length>0?files.join(", "):"None"}\nGenerate a neutral 3-4 sentence dispute case summary covering: (1) nature of dispute, (2) key facts from both perspectives, (3) recommended resolution. Plain text only.`}]})});
       const d=await r.json();setSumm(d.content?.map(i=>i.text||"").join("")||"Dispute filed. Our team will contact both parties within 24 hours.");
     }catch{setSumm("A dispute has been filed. Our Dispute Resolution Officer will review all communications and deliverables and contact both parties with a resolution within 5 business days.");}
     setLd(false);setDone(true);onSubmit();
@@ -1191,7 +1191,7 @@ const AdminPanel=({onBack})=>{
     <div style={{background:T.offWhite,minHeight:"100vh"}}>
       <div style={{background:"linear-gradient(135deg,#1e1b4b,#3730a3)",color:T.white,padding:"0 1.5rem"}}>
         <div style={{maxWidth:1280,margin:"0 auto",display:"flex",alignItems:"center",height:60,gap:16}}>
-          <div style={{fontWeight:800,fontSize:18,cursor:"pointer"}} onClick={onBack}>Vault<span style={{color:T.green}}>Pay</span> <span style={{fontSize:12,opacity:.6,fontWeight:400}}>Admin</span></div>
+          <div style={{fontWeight:800,fontSize:18,cursor:"pointer"}} onClick={onBack}><span style={{color:T.green}}>Escrow</span> <span style={{fontSize:12,opacity:.6,fontWeight:400}}>Admin</span></div>
           <div style={{display:"flex",gap:0,marginLeft:12,overflowX:"auto"}}>
             {[["overview","Overview"],["transactions","All Transactions"],["disputes","Disputes"],["users","Users"],["kyc","KYC Queue"]].map(([k,l])=><button key={k} onClick={()=>setTab(k)} style={{background:"none",border:"none",cursor:"pointer",padding:"8px 13px",fontSize:13,fontWeight:600,color:tab===k?T.gold:"rgba(255,255,255,.55)",borderBottom:tab===k?`2px solid ${T.gold}`:"2px solid transparent",transition:"all .15s",whiteSpace:"nowrap"}}>{l}</button>)}
           </div>
@@ -1318,7 +1318,7 @@ const Dashboard=({user,onLogout,navigate})=>{
       {/* Side Drawer */}
       <aside className={"dash-drawer"+(drawer?" open":"")}>
         <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"0 16px",height:64,borderBottom:"1px solid #c5c6cf",flexShrink:0}}>
-          <span style={{fontWeight:800,fontSize:20,color:"#001637"}}>Vault<span style={{color:"#006c47"}}>Pay</span></span>
+          <span style={{fontWeight:800,fontSize:20,color:"#001637"}}><span style={{color:"#006c47"}}>Escrow</span></span>
           <button onClick={()=>setDrawer(false)} style={{background:"none",border:"none",cursor:"pointer",display:"flex",padding:4}}>
             <span className="msym" style={{fontSize:24,color:"#44474e"}}>close</span>
           </button>
@@ -1358,7 +1358,7 @@ const Dashboard=({user,onLogout,navigate})=>{
             <span className="msym" style={{fontSize:24}}>{drawer?"close":"menu"}</span>
           </button>
           <span style={{fontWeight:800,fontSize:20,color:"#001637",letterSpacing:"-.3px",cursor:"pointer",whiteSpace:"nowrap",flexShrink:0}} onClick={()=>navigate("home")}>
-            Vault<span style={{color:"#006c47"}}>Pay</span>
+            <span style={{color:"#006c47"}}>Escrow</span>
           </span>
           <div className="dash-tabs" style={{display:"flex",gap:0,marginLeft:6,overflow:"hidden"}}>
             {TABS.map(([k,_,l])=>(
@@ -1367,7 +1367,7 @@ const Dashboard=({user,onLogout,navigate})=>{
           </div>
         </div>
         <div style={{display:"flex",alignItems:"center",gap:8,flexShrink:0}}>
-          {user?.email==="admin@vaultpay.com"&&(
+          {user?.email==="admin@Escrow.com"&&(
             <button onClick={()=>setShowAdmin(true)} style={{background:"none",border:"1px solid #c5c6cf",color:"#44474e",padding:"6px 12px",borderRadius:8,cursor:"pointer",fontSize:12,fontWeight:600,whiteSpace:"nowrap",display:"none"}} className="dash-admin-desk">Admin</button>
           )}
           <button onClick={()=>setShowNew(true)} style={{display:"inline-flex",alignItems:"center",gap:6,background:"#006c47",color:"#fff",border:"none",borderRadius:9,cursor:"pointer",fontWeight:700,fontSize:13,padding:"9px 13px",whiteSpace:"nowrap"}}>
@@ -1798,7 +1798,7 @@ const SplashScreen=({onDone})=>{
             </div>
           </div>
           <div style={{textAlign:"center"}}>
-            <h1 style={{fontSize:30,fontWeight:800,color:"#001637",letterSpacing:"-.4px",marginBottom:4}}>Vault<span style={{color:"#006c47"}}>Pay</span></h1>
+            <h1 style={{fontSize:30,fontWeight:800,color:"#001637",letterSpacing:"-.4px",marginBottom:4}}><span style={{color:"#006c47"}}>Escrow</span></h1>
             <p style={{fontSize:11.5,fontWeight:600,color:"#75777f",letterSpacing:".2em",textTransform:"uppercase"}}>Institutional Trust</p>
           </div>
         </div>
@@ -1827,8 +1827,8 @@ const Footer=()=>(
       <div className="fg" style={{display:"grid",gridTemplateColumns:"2fr 1fr 1fr 1fr 1fr",gap:36,marginBottom:48}}>
         <div>
           <div style={{fontWeight:800,fontSize:20,marginBottom:14,display:"flex",alignItems:"center",gap:10}}>
-            <div style={{width:34,height:34,background:T.primary,borderRadius:8,display:"flex",alignItems:"center",justifyContent:"center",color:T.white,fontWeight:800,fontSize:16}}>V</div>
-            Vault<span style={{color:T.gold}}>Pay</span>
+            <div style={{width:34,height:34,background:T.primary,borderRadius:8,display:"flex",alignItems:"center",justifyContent:"center",color:T.white,fontWeight:800,fontSize:16}}>E</div>
+            <span style={{color:T.gold}}>Escrow</span>
           </div>
           <p style={{fontSize:13.5,color:"rgba(255,255,255,.44)",lineHeight:1.85,maxWidth:280,marginBottom:18}}>The AI-powered escrow platform for tech services — protecting clients and providers worldwide.</p>
           <div style={{display:"flex",gap:7,flexWrap:"wrap"}}>
@@ -1839,7 +1839,7 @@ const Footer=()=>(
           {title:"Services",  links:["Software Dev Escrow","Mobile App Escrow","Website Escrow","UI/UX Escrow","Cybersecurity","Cloud & DevOps","AI Development","IT Consulting","Data Analytics","Tech Docs"]},
           {title:"AI Features",links:["Scope Generator","Contract Generator","Deliverable Auditor","Fraud Detection","Dispute Assistant","Risk Scoring","Health Monitor"]},
           {title:"Business",  links:["Enterprise Plans","Escrow API","White Label","Become a Partner","API Documentation","Webhooks","Sandbox"]},
-          {title:"Company",   links:["About VaultPay","Careers","Blog","Press","Help Center","Contact Us","Terms of Service","Privacy Policy"]},
+          {title:"Company",   links:["About Escrow","Careers","Blog","Press","Help Center","Contact Us","Terms of Service","Privacy Policy"]},
         ].map(col=>(
           <div key={col.title}>
             <div style={{fontWeight:700,fontSize:11.5,textTransform:"uppercase",letterSpacing:".08em",color:"rgba(255,255,255,.35)",marginBottom:14}}>{col.title}</div>
@@ -1848,7 +1848,7 @@ const Footer=()=>(
         ))}
       </div>
       <div style={{borderTop:"1px solid rgba(255,255,255,.08)",paddingTop:22,display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:12}}>
-        <span style={{fontSize:12,color:"rgba(255,255,255,.28)"}}>© 2005–2025 VaultPay Inc. All rights reserved. Licensed financial services provider.</span>
+        <span style={{fontSize:12,color:"rgba(255,255,255,.28)"}}>© 2005–2025 Escrow Inc. All rights reserved. Licensed financial services provider.</span>
         <div style={{display:"flex",gap:16,flexWrap:"wrap"}}>
           {["Privacy","Terms","Licenses","Legal","Cookies","GDPR"].map(l=><span key={l} style={{fontSize:12,color:"rgba(255,255,255,.28)",cursor:"pointer"}}>{l}</span>)}
         </div>
